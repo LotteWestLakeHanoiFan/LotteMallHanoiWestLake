@@ -1,0 +1,17 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <canvas id="canvas"></canvas>
+        <div style="display:none">
+            <img id="img3rdFloor" src="thirdCeilingMap.jpg">
+        </div>
+        <script>
+            const myCanvas = document.getElementById("canvas");
+            const canvasContext =myCanvas.getContext("2d");
+            const thirdFloorImg = document.getElementById("img3rdFloor");
+            canvasContext.drawImage(thirdFloorImg,0,0);
+        </script>
+    </body>
+</html>  
