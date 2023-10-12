@@ -1,0 +1,21 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <canvas id="canvas"></canvas>
+        <script>
+            const myCanvas = document.getElementById("canvas");
+            const canvasContext =myCanvas.getContext("2d");
+            canvasContext.beginPath();
+            canvasContext.arc(75,75,50,0, Math.PI * 2, true);
+            canvasContext.moveTo(110,75);
+            canvasContext.arc(75,75, 35, 0, Math.PI, false );
+            canvasContext.moveTo(65,65);
+            canvasContext.arc(60,65, 5, 0, Math.PI * 2, true);
+            canvasContext.moveTo(95, 65);
+            canvasContext.arc(90,65, 5,0, Math.PI * 2, true);
+            canvasContext.stroke();
+        </script>
+    </body>
+</html>  
