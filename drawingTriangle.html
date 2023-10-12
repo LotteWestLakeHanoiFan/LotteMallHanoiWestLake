@@ -1,0 +1,17 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <canvas id="canvas"></canvas>
+        <script>
+            const myCanvas = document.getElementById("canvas");
+            const canvasContext =myCanvas.getContext("2d");
+            canvasContext.beginPath();
+            canvasContext.moveTo(75,50);
+            canvasContext.lineTo(100,75);
+            canvasContext.lineTo(100,25);
+            canvasContext.fill();
+        </script>
+    </body>
+</html>  
