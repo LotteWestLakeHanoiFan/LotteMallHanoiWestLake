@@ -12,6 +12,12 @@
             const canvasContext =myCanvas.getContext("2d");
             const thirdFloorImg = document.getElementById("img3rdFloor");
             canvasContext.drawImage(thirdFloorImg,0,0);
+
+            const dot = new Path2D();
+            dot.arc(300, 300, 10, 0, Math.PI*2,true);
+
+            canvasContext.fillStyle="red";
+            canvasContext.fill(dot);
         </script>
     </body>
 </html>  
