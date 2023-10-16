@@ -123,6 +123,7 @@
       {name:"Đỗ Thái Hà",
        number: "0828291468"}]
 
+        const  datePicker = document.getElementById("datePicker");
        const output = document.getElementById("messageOutPut");
         function populateMemberSelects(){
             let collection = document.querySelectorAll(".member");
@@ -147,9 +148,10 @@
                 })
         }
 
+
         function generate_ThangLoi_ShipCard(){
-            
-            `Bảng chấm công ngày ${strDateMonth}`
+            let strDateMonth = datePicker.value;
+            output.innerText = `Bảng chấm công ngày ${strDateMonth}`
         }
 
         function abc(){
