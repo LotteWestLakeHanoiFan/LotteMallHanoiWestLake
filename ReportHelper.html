@@ -64,20 +64,25 @@
     <div class="frmHolder">
       <h1>Member positions report</h1>
       <form id="frmMemberPos">
+        <div class="line">
         <span>Ship </span>
         <select name="moments">
           <option value="sáng">Sáng</option>
           <option value="tối">Tối</option>
         </select>
-        <br>
+      </div><div class="line">
         <span>Entrance 1</span><select class="member" name="entrance1"></select>
-        <br>
+      </div><div class="line">
+
         <span>Entrance 2</span><select class="member" name="entrance2"></select>
-        <br>
+      </div><div class="line">
+
         <span>Entrance 3</span><select class="member" name="entrance3"></select>
-        <br>
+      </div><div class="line">
+
         <span>Patrol</span><select class="member" name="patrol"></select>
-        <br />
+      </div>
+
         <input type="submit" value="Generate" onclick="generate_pos_report(event)" />
       </form>
     </div>
@@ -99,7 +104,7 @@
         <span>Reporter</span>
         <select class="member" name="member"></select>
       </div>
-      <div class="line">
+      
         <input
           type="submit"
           value="Generate"
