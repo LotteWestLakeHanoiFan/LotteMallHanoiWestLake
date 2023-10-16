@@ -32,6 +32,13 @@
           border: 1px solid gray;
           margin-left: 200px;
       }
+      .line{
+        margin-bottom: 10px;
+      }
+      .line >span{
+        display: inline-block;
+        margin-right: 20px;
+      }
     </style>
   </head>
   <body>
@@ -41,40 +48,65 @@
     <div class="frmHolder">
       <h1>Closing report</h1>
       <form id="frmClosingReport">
-        <span>At time</span> <input type="time" name="timePicker" />
-        <select class="member" name="reporter"></select>
+        <span>At time</span> <input type="time" name="timePicker" />\
         <br />
-        <input type="submit" value="Generate" />
+        <span>Reporter</span
+        ><select class="member" name="reporter"></select>
+        <br />
+        <input
+          type="submit"
+          value="Generate"
+          onclick="generate_Closing_Message(event)"
+        />
       </form>
     </div>
 
     <div class="frmHolder">
       <h1>Member positions report</h1>
       <form id="frmMemberPos">
-        <span>Ship </span
-        ><select name="moments">
+        <span>Ship </span>
+        <select name="moments">
           <option value="sáng">Sáng</option>
           <option value="tối">Tối</option>
         </select>
-        <select class="member" name="entrance1"></select>
-        <select class="member" name="entrance2"></select>
-        <select class="member" name="entrance3"></select>
-        <select class="member" name="patrol"></select>
+        <br>
+        <span>Entrance 1</span><select class="member" name="entrance1"></select>
+        <br>
+        <span>Entrance 2</span><select class="member" name="entrance2"></select>
+        <br>
+        <span>Entrance 3</span><select class="member" name="entrance3"></select>
+        <br>
+        <span>Patrol</span><select class="member" name="patrol"></select>
         <br />
-        <input type="submit" value="Generate" />
+        <input type="submit" value="Generate" onclick="generate_pos_report(event)" />
       </form>
     </div>
     <div class="frmHolder">
       <h1>Member quantity report</h1>
       <form id="frmMemberQuantity">
-        <span>Quantity</span> <input type="number" name="memberQuantity" />
-        <span>At time</span> <input type="time" name="timePicker" />
+        <div class="line">
+          <span>Quantity</span> <input type="number" name="memberQuantity" value="4" />
+        </div>
+        <div class="line">
+        <span>Total</span> <input type="number" name="total" value="4" />
+      </div>
+      <div class="line">
+        <span>At time</span>
+        <input type="time" name="timePicker" pattern="[0-9]{2}h[0-9]{2}" />
+      </div>
+      <div class="line">
+
+        <span>Reporter</span>
         <select class="member" name="member"></select>
-        <br />
-        <input type="submit" value="Generate" />
+      </div>
+      <div class="line">
+        <input
+          type="submit"
+          value="Generate"
+          onclick="generate_Squad_Quantity(event)"
+        />
       </form>
     </div>
-
     <div class="frmHolder">
       <h1>Thang Loi Member checkin report</h1>
       <form id="frmThangLoiMemberCheckinReport">
@@ -100,21 +132,25 @@
     <div class="frmHolder">
       <h1>Nha Sach Ship check in report</h1>
       <form id="frmNhaSachShipCheckInReport">
-        <input type="submit" value="Generate" onclick="generate_NhaSach_ShipCard(event)"/>
+        <input
+          type="submit"
+          value="Generate"
+          onclick="generate_NhaSach_ShipCard(event)"
+        />
       </form>
     </div>
 
     <div class="frmHolder">
       <h1>Message Ouput</h1>
       <form id="frmMessageOutput">
-        <input id="messageOutPut"/>
+        <textarea id="messageOutPut" />
       </form>
     </div>
     <script>
       let members = [
+        { name: "Lê Quang Dũng", number: "0386046481" },
         { name: "Nguyễn Hằng Nga", number: "0941917121" },
         { name: "Nguyễn Văn Ánh", number: "0377129148 " },
-        { name: "Lê Quang Dũng", number: "0386046481" },
         { name: "Nghiên Giang Hải", number: "0924887454" },
         { name: "Tạ Quang Lợi", number: "0393868148" },
         { name: "Nguyễn Thị Thanh Hiền", number: "0325912259" },
@@ -173,19 +209,29 @@
         doCopytoClipboard();
       }
 
-      function generate_Squad_Quantity(event){
+      function generate_Squad_Quantity(event) {
         event.preventDefault();
         let date = new Date(datePicker.value);
         let strDateMonth = `${date.getDate()}/${date.getMonth()}`;
 
+        let form = document.getElementById("frmMemberQuantity");
 
-        let employeeName = members[0].name;
+        let employeeName = members[Number.parseInt(form.member.value)].name;
+        let total = form.total.value;
+        let quantity = form.memberQuantity.value;
+        let time = form.timePicker.value;
+        if (time) {
+          time = time.replace(":", "h");
+        } else {
+          let moment = new Date();
+          time = `${moment.getHours()}h${moment.getMinutes()}`;
+        }
 
         output.value = `Báo Cáo Ban Quản Lý
 -tình hình ca ngày ${strDateMonth}
--Lúc:17h30
--Mục Tiêu: TTTM Lotte mall tây hồ - Hà Nội v
--Quân Số 4/4(Vị Trí)
+-Lúc: ${time}
+-Mục Tiêu: TTTM Lotte mall tây hồ - Hà Nội
+-Quân Số ${quantity}/${total} (Vị Trí)
 -Tác Phong Nghiêm Túc
 -nhân viên ${employeeName}
 -Tình hình ANTT-PCCC
@@ -194,20 +240,46 @@
 
         doCopytoClipboard();
       }
+      function generate_Closing_Message(event) {
+        event.preventDefault();
+        let date = new Date(datePicker.value);
+        let strDateMonth = `${date.getDate()}/${date.getMonth()}`;
 
-      function abc() {
+        let form = document.getElementById("frmClosingReport");
 
-        `Báo cáo ca trực cuối ngày  15/10  NV : Lê Quang Dũng `
+        let employeeName = members[Number.parseInt(form.reporter.value)].name;
+        let time = form.timePicker.value;
+        if (time) {
+          time = time.replace(":", "h");
+        } else {
+          let moment = new Date();
+          time = `${moment.getHours()}h${moment.getMinutes()}`;
+        }
 
-
-
-        
+        output.value = `Báo cáo ca trực cuối ngày ${time}\nNV : ${employeeName}`;
+        doCopytoClipboard();
       }
 
       function doCopytoClipboard() {
         output.select();
         document.execCommand("copy");
         output.focus();
+      }
+
+      function generate_pos_report(e){
+        e.preventDefault();
+        let date = new Date(datePicker.value);
+        let strDateMonth = `${date.getDate()}/${date.getMonth()}`;
+
+        let form = document.getElementById("frmMemberPos");
+        
+        output.value =`Báo cáo tình hình nhân sự ${form.moments.value} ${strDateMonth}
+
+${members[form.entrance1.value].name} (cửa 1) ${members[form.entrance1.value].number}
+${members[form.entrance2.value].name} (cửa 2) ${members[form.entrance2.value].number}
+${members[form.entrance3.value].name} (cửa 3) ${members[form.entrance3.value].number}
+${members[form.patrol.value].name} (tuần tra) ${members[form.patrol.value].number}`;
+        doCopytoClipboard();
       }
 
       navBarInitiation();
