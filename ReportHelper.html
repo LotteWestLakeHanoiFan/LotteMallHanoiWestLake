@@ -82,7 +82,7 @@
     <div class="frmHolder">
       <h1>Thang Loi Member checkin report</h1>
       <form id="frmThangLoiMemberCheckinReport">
-        <input type="submit" value="Generate" />
+        <input type="submit" value="Generate" onclick="generate_ThangLoi_ShipCard(event)" />
       </form>
     </div>
 
@@ -150,7 +150,8 @@
         }
 
 
-        function generate_ThangLoi_ShipCard(){
+        function generate_ThangLoi_ShipCard(e){
+            e.preventDefault();
             let strDateMonth = datePicker.value;
             output.innerText = `Bảng chấm công ngày ${strDateMonth}`
         }
