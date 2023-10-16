@@ -139,8 +139,30 @@
                     let a = document.querySelector("a");
                     a.innerText = div.querySelector("h1").innerText;
                     a.href="#"+ div.querySelector("form").id;
+                    navBar.appendChild(a);
                 })
         }
+
+        function generate_ThangLoi_ShipCard(){
+            
+            `Bảng chấm công ngày ${strDateMonth}`
+        }
+
+        function abc(){
+            
+
+            `Báo Cáo Ban Quản Lý
+            -tình hình ca ngày 16/10
+            -Lúc:17h30
+            -Mục Tiêu: TTTM Lotte mall tây hồ - Hà Nội v
+            -Quân Số 4/4(Vị Trí)
+            -Tác Phong Nghiêm Túc
+            -nhân viên Nghiên giang hai 
+            -Tình hình ANTT-PCCC
+            -Bảo Đảm An Toàn
+            -Báo Cáo Mr.Dũng hết`
+        }
+
         navBarInitiation();
         populateMemberSelects();
     </script>
