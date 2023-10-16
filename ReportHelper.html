@@ -60,7 +60,7 @@
     <div class="stick-left-nav" id="navBar"></div>
 
     <div class="frmHolder">
-      <h1>Closing report</h1>
+      <h4>Closing report</h4>
       <form id="frmClosingReport">
         <div class="line">
           <span>At time</span> <input type="time" name="timePicker" />
@@ -78,7 +78,7 @@
     </div>
 
     <div class="frmHolder">
-      <h1>Member positions report</h1>
+      <h4>Member positions report</h4>
       <form id="frmMemberPos">
         <div class="line">
           <span>Ship </span>
@@ -112,7 +112,7 @@
       </form>
     </div>
     <div class="frmHolder">
-      <h1>Member quantity report</h1>
+      <h4>Member quantity report</h4>
       <form id="frmMemberQuantity">
         <div class="line">
           <span>Quantity</span>
@@ -138,7 +138,7 @@
       </form>
     </div>
     <div class="frmHolder">
-      <h1>Thang Loi Member checkin report</h1>
+      <h4>Thang Loi Member checkin report</h4>
       <form id="frmThangLoiMemberCheckinReport">
         <input
           type="submit"
@@ -149,7 +149,7 @@
     </div>
 
     <div class="frmHolder">
-      <h1>Central Retail Member checkins report</h1>
+      <h4>Central Retail Member checkins report</h4>
       <form id="frmCentralRetailMemberReport">
         <input
           type="submit"
@@ -160,7 +160,7 @@
     </div>
 
     <div class="frmHolder">
-      <h1>Nha Sach Ship check in report</h1>
+      <h4>Nha Sach Ship check in report</h4>
       <form id="frmNhaSachShipCheckInReport">
         <input
           type="submit"
@@ -171,7 +171,7 @@
     </div>
 
     <div class="frmHolder">
-      <h1>Message Ouput</h1>
+      <h4>Message Ouput</h4>
       <form id="frmMessageOutput">
         <textarea id="messageOutPut"></textarea>
       </form>
@@ -207,7 +207,7 @@
         let navBar = document.querySelector("#navBar");
         Array.from(document.querySelectorAll(".frmHolder")).forEach((div) => {
           let a = document.createElement("a");
-          a.innerText = div.querySelector("h1").innerText;
+          a.innerText = div.querySelector("h4").innerText;
           a.href = "#" + div.querySelector("form").id;
           navBar.appendChild(a);
         });
