@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <style>
+            .stackedCanvas {
+                position:absolute;
+                top:0;
+                left:0;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas class="stackedCanvas" id="backGround" width="3264" height="2448"></canvas>
+        <canvas class="stackedCanvas" id="gps" width="3264" height="2448"></canvas>
+        <div style="display:none">
+            <img id="img3rdFloor" src="thirdCeilingMap.jpg">
+        </div>
+        <script>
+            const bgCanvas = document.getElementById("backGround");
+            const bgContext =bgCanvas.getContext("2d");
+            const thirdFloorImg = document.getElementById("img3rdFloor");
+            bgContext.drawImage(thirdFloorImg,0,0);
+
+            const gpsCanvas = document.getElementById("gps");
+            const gpsContext = gpsCanvas.getContext("2d");
+            const dot = new Path2D();
+            dot.arc(300, 300, 10, 0, Math.PI*2,true);
+            const sight = new Path2D();
+            sight.arc(305, 305, 10, 0, Math.PI, true);
+            sight.moveTo
+
+            gpsContext.fillStyle="orange";
+            gpsContext.fill(dot);
+        </script>
+    </body>
+</html>  

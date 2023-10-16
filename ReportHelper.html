@@ -1,0 +1,122 @@
+<html>
+  <head>
+    <title>
+        Reports Helper
+    </title>
+    <style>
+      .stick{
+          position:sticky;
+          top:0px;
+          left: 0px;
+          height: 30px;
+      }
+      .frmHolder{
+          margin-top:55px;
+      }
+
+      .stick, .frmHolder{
+          padding: 25px;
+          box-sizing:border-box;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stick"> Report Date: <input type="date" id="datePicker" /></div>
+
+    <div class="frmHolder">
+      <h1>Closing report</h1>
+      <form id="FrmMemberPos">
+        <span>At time</span> <input type="time" name="timePicker" />
+        <select class="member" name="reporter"></select>
+        <br />
+        <input type="submit" value="Generate" />
+      </form>
+    </div>
+
+    <div class="frmHolder">
+      <h1>Member positions report</h1>
+      <form id="FrmMemberPos">
+        <span>Ship </span
+        ><select name="moments">
+          <option value="sáng">Sáng</option>
+          <option value="tối">Tối</option>
+        </select>
+        <select class="member" name="entrance1"></select>
+        <select class="member" name="entrance2"></select>
+        <select class="member" name="entrance3"></select>
+        <select class="member" name="patrol"></select>
+        <br />
+        <input type="submit" value="Generate" />
+      </form>
+    </div>
+    <div class="frmHolder">
+      <h1>Member quantity report</h1>
+      <form id="FrmMemberQuantity">
+        <span>Quantity</span> <input type="number" name="memberQuantity" />
+        <span>At time</span> <input type="time" name="timePicker" />
+        <select class="member" name="member"></select>
+        <br />
+        <input type="submit" value="Generate" />
+      </form>
+    </div>
+
+    <div class="frmHolder">
+      <h1>Thang Loi Member checkin report</h1>
+      <form id="FrmMemberPos">
+        <input type="submit" value="Generate" />
+      </form>
+    </div>
+
+    <div class="frmHolder">
+      <h1>Central Retail Member checkins report</h1>
+      <form id="FrmCentralRetailMemberReport">
+        <input type="submit" value="Generate" />
+      </form>
+    </div>
+
+    <div class="frmHolder">
+      <h1>Nha Sach Ship check in report</h1>
+      <form id="NhaSachShipCheckInReport">
+        <input type="submit" value="Generate" />
+      </form>
+    </div>
+
+    <div class="frmHolder">
+      <h1>Message Ouput</h1>
+      <div id="messageOutPut"></div>
+    </div>
+    <script>
+      let members = [{name:"Nguyễn Hằng Nga",
+       number: "0941917121"},
+      {name:"Nguyễn Văn Ánh",
+       number: "0377129148 "},
+      {name:"Lê Quang Dũng",
+       number: "0386046481"},
+      {name:"Nghiên Giang Hải",
+       number: "0924887454"},
+      {name:"Tạ Quang Lợi",
+       number: "0393868148"},
+      {name:"Nguyễn Thị Thanh Hiền",
+       number: "0325912259"},
+      {name:"Quàng Văn Quý",
+       number: "0964848961"},
+      {name:"Đỗ Thái Hà",
+       number: "0828291468"}]
+
+       const output = document.getElementById("messageOutPut");
+        function populateMemberSelects(){
+            let collection = document.querySelectorAll(".member");
+            Array.from(collection).forEach(select=>{
+                members.forEach((v,i,a)=>{
+                    let option = document.createElement("option");
+                    option.innerText = v.name;
+                    option.value = i;
+                    select.appendChild(option);
+                })
+            })
+        }
+
+        populateMemberSelects();
+    </script>
+  </body>
+</html>

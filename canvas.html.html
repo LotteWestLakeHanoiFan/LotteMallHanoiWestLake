@@ -17,3 +17,33 @@
         </script>
     </body>
 </html>  
+
+<!--
+    const c = document.getElementById("myCanvas");
+const ctx = c.getContext("2d");
+
+// Create gradient
+const grd = ctx.createLinearGradient(0,0,60,0);
+grd.addColorStop(0,"red");
+grd.addColorStop(1,"white");
+
+ctx.fillStyle = grd;
+const rat = Math.PI
+// Fill with gradient
+ctx.arc(20,20,5,0, Math.PI*2);
+ctx.fill();
+ctx.beginPath();
+ctx.moveTo(20,35);
+ctx.quadraticCurveTo(35,35,35,20);
+//ctx.moveTo(20,35);
+ctx.lineTo(50,20);
+//ctx.moveTo(20,50);
+ctx.quadraticCurveTo(50,50, 20,50);
+//ctx.moveTo(35,20);
+
+ctx.lineTo(20,50);
+ctx.fillStyle = "rgba(255,100,25,0.3)";
+//ctx.stroke();
+ctx.fill();
+
+-->
