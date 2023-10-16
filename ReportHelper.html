@@ -92,7 +92,7 @@
         <input
           type="submit"
           value="Generate"
-          onclic="generate_CentralRetail_Shipcard(event)"
+          onclick="generate_CentralRetail_Shipcard(event)"
         />
       </form>
     </div>
@@ -100,7 +100,7 @@
     <div class="frmHolder">
       <h1>Nha Sach Ship check in report</h1>
       <form id="frmNhaSachShipCheckInReport">
-        <input type="submit" value="Generate" onclick="gerenate_NhaSach_ShipCard(event)"/>
+        <input type="submit" value="Generate" onclick="generate_NhaSach_ShipCard(event)"/>
       </form>
     </div>
 
@@ -155,7 +155,7 @@
         doCopytoClipboard();
       }
 
-      function gerenate_NhaSach_ShipCard(event) {
+      function generate_NhaSach_ShipCard(event) {
         e.preventDefault();
         let date = new Date(datePicker.value);
         let strDateMonth = `${date.getDate()}/${date.getMonth()}`;
@@ -173,6 +173,27 @@
         doCopytoClipboard();
       }
 
+      function generate_Squad_Quantity(event){
+        event.preventDefault();
+        let date = new Date(datePicker.value);
+        let strDateMonth = `${date.getDate()}/${date.getMonth()}`;
+
+
+        let employeeName = members[0].name;
+
+        output.innerText = `Báo Cáo Ban Quản Lý
+-tình hình ca ngày ${strDateMonth}
+-Lúc:17h30
+-Mục Tiêu: TTTM Lotte mall tây hồ - Hà Nội v
+-Quân Số 4/4(Vị Trí)
+-Tác Phong Nghiêm Túc
+-nhân viên ${employeeName}
+-Tình hình ANTT-PCCC
+-Bảo Đảm An Toàn
+-Báo Cáo Mr.Dũng hết`;
+
+        doCopytoClipboard();
+      }
 
       function abc() {
 
@@ -180,16 +201,7 @@
 
 
 
-        `Báo Cáo Ban Quản Lý
-            -tình hình ca ngày 16/10
-            -Lúc:17h30
-            -Mục Tiêu: TTTM Lotte mall tây hồ - Hà Nội v
-            -Quân Số 4/4(Vị Trí)
-            -Tác Phong Nghiêm Túc
-            -nhân viên Nghiên giang hai 
-            -Tình hình ANTT-PCCC
-            -Bảo Đảm An Toàn
-            -Báo Cáo Mr.Dũng hết`;
+        
       }
 
       function doCopytoClipboard() {
