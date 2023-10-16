@@ -19,6 +19,7 @@
         width:200px;
         box-sizing: border-box;
         padding: 10px;
+        border: 1px solid red;
       }
       .stick-left-nav>a{
         display: block;
@@ -141,7 +142,7 @@
             let navBar = document.querySelector("#navBar");
             Array.from(document.querySelectorAll(".frmHolder"))
                 .forEach(div=>{
-                    let a = document.querySelector("a");
+                    let a = document.createElement("a");
                     a.innerText = div.querySelector("h1").innerText;
                     a.href="#"+ div.querySelector("form").id;
                     navBar.appendChild(a);
