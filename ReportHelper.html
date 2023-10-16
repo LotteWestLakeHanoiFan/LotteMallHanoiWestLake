@@ -1,20 +1,17 @@
 <html>
   <head>
-    <title>
-        Reports Helper
-    </title>
+    <title>Reports Helper</title>
     <style>
       .stick{
           position:sticky;
           top:0px;
-          left: 0px;
-          height: 30px;
+          left: 200px;
           background: white;
       }
 
       .stick-left-nav{
         position:sticky;
-        top:60;
+        top:0;
         left: 0;
         width:200px;
         box-sizing: border-box;
@@ -38,9 +35,8 @@
     </style>
   </head>
   <body>
-    <div class="stick"> Report Date: <input type="date" id="datePicker" /></div>
-    <div class="stick-left-nav" id="navBar">
-    </div>
+    <div class="stick">Report Date: <input type="date" id="datePicker" /></div>
+    <div class="stick-left-nav" id="navBar"></div>
 
     <div class="frmHolder">
       <h1>Closing report</h1>
@@ -82,84 +78,109 @@
     <div class="frmHolder">
       <h1>Thang Loi Member checkin report</h1>
       <form id="frmThangLoiMemberCheckinReport">
-        <input type="submit" value="Generate" onclick="generate_ThangLoi_ShipCard(event)" />
+        <input
+          type="submit"
+          value="Generate"
+          onclick="generate_ThangLoi_ShipCard(event)"
+        />
       </form>
     </div>
 
     <div class="frmHolder">
       <h1>Central Retail Member checkins report</h1>
       <form id="frmCentralRetailMemberReport">
-        <input type="submit" value="Generate" />
+        <input
+          type="submit"
+          value="Generate"
+          onclic="generate_CentralRetail_Shipcard(event)"
+        />
       </form>
     </div>
 
     <div class="frmHolder">
       <h1>Nha Sach Ship check in report</h1>
       <form id="frmNhaSachShipCheckInReport">
-        <input type="submit" value="Generate" />
+        <input type="submit" value="Generate" onclick="gerenate_NhaSach_ShipCard(event)"/>
       </form>
     </div>
 
     <div class="frmHolder">
       <h1>Message Ouput</h1>
       <form id="frmMessageOutput">
-          <div id="messageOutPut"></div>
+        <div id="messageOutPut"></div>
       </form>
     </div>
     <script>
-      let members = [{name:"Nguyễn Hằng Nga",
-       number: "0941917121"},
-      {name:"Nguyễn Văn Ánh",
-       number: "0377129148 "},
-      {name:"Lê Quang Dũng",
-       number: "0386046481"},
-      {name:"Nghiên Giang Hải",
-       number: "0924887454"},
-      {name:"Tạ Quang Lợi",
-       number: "0393868148"},
-      {name:"Nguyễn Thị Thanh Hiền",
-       number: "0325912259"},
-      {name:"Quàng Văn Quý",
-       number: "0964848961"},
-      {name:"Đỗ Thái Hà",
-       number: "0828291468"}]
+      let members = [
+        { name: "Nguyễn Hằng Nga", number: "0941917121" },
+        { name: "Nguyễn Văn Ánh", number: "0377129148 " },
+        { name: "Lê Quang Dũng", number: "0386046481" },
+        { name: "Nghiên Giang Hải", number: "0924887454" },
+        { name: "Tạ Quang Lợi", number: "0393868148" },
+        { name: "Nguyễn Thị Thanh Hiền", number: "0325912259" },
+        { name: "Quàng Văn Quý", number: "0964848961" },
+        { name: "Đỗ Thái Hà", number: "0828291468" },
+      ];
 
-        const  datePicker = document.getElementById("datePicker");
-       const output = document.getElementById("messageOutPut");
-        function populateMemberSelects(){
-            let collection = document.querySelectorAll(".member");
-            Array.from(collection).forEach(select=>{
-                members.forEach((v,i,a)=>{
-                    let option = document.createElement("option");
-                    option.innerText = v.name;
-                    option.value = i;
-                    select.appendChild(option);
-                })
-            })
-        }
+      const datePicker = document.getElementById("datePicker");
+      datePicker.valueAsDate = new Date();
+      const output = document.getElementById("messageOutPut");
+      function populateMemberSelects() {
+        let collection = document.querySelectorAll(".member");
+        Array.from(collection).forEach((select) => {
+          members.forEach((v, i, a) => {
+            let option = document.createElement("option");
+            option.innerText = v.name;
+            option.value = i;
+            select.appendChild(option);
+          });
+        });
+      }
 
-        function navBarInitiation(){
-            let navBar = document.querySelector("#navBar");
-            Array.from(document.querySelectorAll(".frmHolder"))
-                .forEach(div=>{
-                    let a = document.createElement("a");
-                    a.innerText = div.querySelector("h1").innerText;
-                    a.href="#"+ div.querySelector("form").id;
-                    navBar.appendChild(a);
-                })
-        }
+      function navBarInitiation() {
+        let navBar = document.querySelector("#navBar");
+        Array.from(document.querySelectorAll(".frmHolder")).forEach((div) => {
+          let a = document.createElement("a");
+          a.innerText = div.querySelector("h1").innerText;
+          a.href = "#" + div.querySelector("form").id;
+          navBar.appendChild(a);
+        });
+      }
+
+      function generate_ThangLoi_ShipCard(e) {
+        e.preventDefault();
+        let date = new Date(datePicker.value);
+        let strDateMonth = `${date.getDate()}/${date.getMonth()}`;
+        output.innerText = `Bảng chấm công ngày ${strDateMonth}`;
+        doCopytoClipboard();
+      }
+
+      function gerenate_NhaSach_ShipCard(event) {
+        e.preventDefault();
+        let date = new Date(datePicker.value);
+        let strDateMonth = `${date.getDate()}/${date.getMonth()}`;
+        output.innerText = `Bảng chấm công đội Nhà Sạch ngày ${strDateMonth} đội Nhà Sạch`;
+
+        doCopytoClipboard();
+      }
+
+      function generate_CentralRetail_Shipcard(event) {
+        e.preventDefault();
+        let date = new Date(datePicker.value);
+        let strDateMonth = `${date.getDate()}/${date.getMonth()}`;
+        output.innerText = `Em gửi anh bảng chấm công ngày ${strDateMonth}`;
+
+        doCopytoClipboard();
+      }
 
 
-        function generate_ThangLoi_ShipCard(e){
-            e.preventDefault();
-            let strDateMonth = datePicker.value;
-            output.innerText = `Bảng chấm công ngày ${strDateMonth}`
-        }
+      function abc() {
 
-        function abc(){
-            
+        `Báo cáo ca trực cuối ngày  15/10  NV : Lê Quang Dũng `
 
-            `Báo Cáo Ban Quản Lý
+
+
+        `Báo Cáo Ban Quản Lý
             -tình hình ca ngày 16/10
             -Lúc:17h30
             -Mục Tiêu: TTTM Lotte mall tây hồ - Hà Nội v
@@ -168,11 +189,16 @@
             -nhân viên Nghiên giang hai 
             -Tình hình ANTT-PCCC
             -Bảo Đảm An Toàn
-            -Báo Cáo Mr.Dũng hết`
-        }
+            -Báo Cáo Mr.Dũng hết`;
+      }
 
-        navBarInitiation();
-        populateMemberSelects();
+      function doCopytoClipboard() {
+        output.select();
+        document.execCommand("copy");
+      }
+
+      navBarInitiation();
+      populateMemberSelects();
     </script>
   </body>
 </html>
