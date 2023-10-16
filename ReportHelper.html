@@ -155,7 +155,7 @@
         doCopytoClipboard();
       }
 
-      function generate_NhaSach_ShipCard(event) {
+      function generate_NhaSach_ShipCard(e) {
         e.preventDefault();
         let date = new Date(datePicker.value);
         let strDateMonth = `${date.getDate()}/${date.getMonth()}`;
@@ -164,7 +164,7 @@
         doCopytoClipboard();
       }
 
-      function generate_CentralRetail_Shipcard(event) {
+      function generate_CentralRetail_Shipcard(e) {
         e.preventDefault();
         let date = new Date(datePicker.value);
         let strDateMonth = `${date.getDate()}/${date.getMonth()}`;
