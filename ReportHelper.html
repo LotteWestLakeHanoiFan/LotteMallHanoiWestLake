@@ -9,23 +9,37 @@
           top:0px;
           left: 0px;
           height: 30px;
+          background: white;
+      }
+
+      .stick-left-nav{
+        position:sticky;
+        top:60;
+        left: 0;
+        width:200px;
+      }
+      .stick-left-nav>a{
+        display: block;
       }
       .frmHolder{
           margin-top:55px;
       }
 
       .stick, .frmHolder{
-          padding: 25px;
+          padding: 15px;
           box-sizing:border-box;
+          border: 1px solid gray;
       }
     </style>
   </head>
   <body>
     <div class="stick"> Report Date: <input type="date" id="datePicker" /></div>
+    <div class="stick-left-nav" id="navBar">
+    </div>
 
     <div class="frmHolder">
       <h1>Closing report</h1>
-      <form id="FrmMemberPos">
+      <form id="frmClosingReport">
         <span>At time</span> <input type="time" name="timePicker" />
         <select class="member" name="reporter"></select>
         <br />
@@ -35,7 +49,7 @@
 
     <div class="frmHolder">
       <h1>Member positions report</h1>
-      <form id="FrmMemberPos">
+      <form id="frmMemberPos">
         <span>Ship </span
         ><select name="moments">
           <option value="sáng">Sáng</option>
@@ -51,7 +65,7 @@
     </div>
     <div class="frmHolder">
       <h1>Member quantity report</h1>
-      <form id="FrmMemberQuantity">
+      <form id="frmMemberQuantity">
         <span>Quantity</span> <input type="number" name="memberQuantity" />
         <span>At time</span> <input type="time" name="timePicker" />
         <select class="member" name="member"></select>
@@ -62,28 +76,30 @@
 
     <div class="frmHolder">
       <h1>Thang Loi Member checkin report</h1>
-      <form id="FrmMemberPos">
+      <form id="frmThangLoiMemberCheckinReport">
         <input type="submit" value="Generate" />
       </form>
     </div>
 
     <div class="frmHolder">
       <h1>Central Retail Member checkins report</h1>
-      <form id="FrmCentralRetailMemberReport">
+      <form id="frmCentralRetailMemberReport">
         <input type="submit" value="Generate" />
       </form>
     </div>
 
     <div class="frmHolder">
       <h1>Nha Sach Ship check in report</h1>
-      <form id="NhaSachShipCheckInReport">
+      <form id="frmNhaSachShipCheckInReport">
         <input type="submit" value="Generate" />
       </form>
     </div>
 
     <div class="frmHolder">
       <h1>Message Ouput</h1>
-      <div id="messageOutPut"></div>
+      <form id="frmMessageOutput">
+          <div id="messageOutPut"></div>
+      </form>
     </div>
     <script>
       let members = [{name:"Nguyễn Hằng Nga",
@@ -116,6 +132,16 @@
             })
         }
 
+        function navBarInitiation(){
+            let navBar = document.querySelector("#navBar");
+            Array.from(document.querySelectorAll(".frmHolder"))
+                .forEach(div=>{
+                    let a = document.querySelector("a");
+                    a.innerText = div.querySelector("h1").innerText;
+                    a.href="#"+ div.querySelector("form").id;
+                })
+        }
+        navBarInitiation();
         populateMemberSelects();
     </script>
   </body>
