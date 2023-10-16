@@ -5,7 +5,7 @@
       .stick{
           position:sticky;
           top:0px;
-          left: 0px;
+          right: 0px;
           width: 200px;
           background: white;
       }
@@ -31,7 +31,10 @@
           padding: 15px;
           box-sizing:border-box;
           border: 1px solid gray;
-          margin-left: 200px;
+          margin-left: 200px
+      }
+      .stick{
+        margin-left: 0;
       }
       .line{
         margin-bottom: 10px;
@@ -49,11 +52,13 @@
     <div class="frmHolder">
       <h1>Closing report</h1>
       <form id="frmClosingReport">
-        <span>At time</span> <input type="time" name="timePicker" />\
-        <br />
-        <span>Reporter</span
-        ><select class="member" name="reporter"></select>
-        <br />
+        <div class="line">
+          <span>At time</span> <input type="time" name="timePicker" />
+        </div>
+        <div class="line">
+          <span>Reporter</span
+          ><select class="member" name="reporter"></select>
+        </div>
         <input
           type="submit"
           value="Generate"
@@ -66,46 +71,55 @@
       <h1>Member positions report</h1>
       <form id="frmMemberPos">
         <div class="line">
-        <span>Ship </span>
-        <select name="moments">
-          <option value="sáng">Sáng</option>
-          <option value="tối">Tối</option>
-        </select>
-      </div><div class="line">
-        <span>Entrance 1</span><select class="member" name="entrance1"></select>
-      </div><div class="line">
+          <span>Ship </span>
+          <select name="moments">
+            <option value="sáng">Sáng</option>
+            <option value="tối">Tối</option>
+          </select>
+        </div>
+        <div class="line">
+          <span>Entrance 1</span
+          ><select class="member" name="entrance1"></select>
+        </div>
+        <div class="line">
+          <span>Entrance 2</span
+          ><select class="member" name="entrance2"></select>
+        </div>
+        <div class="line">
+          <span>Entrance 3</span
+          ><select class="member" name="entrance3"></select>
+        </div>
+        <div class="line">
+          <span>Patrol</span
+          ><select class="member" name="patrol"></select>
+        </div>
 
-        <span>Entrance 2</span><select class="member" name="entrance2"></select>
-      </div><div class="line">
-
-        <span>Entrance 3</span><select class="member" name="entrance3"></select>
-      </div><div class="line">
-
-        <span>Patrol</span><select class="member" name="patrol"></select>
-      </div>
-
-        <input type="submit" value="Generate" onclick="generate_pos_report(event)" />
+        <input
+          type="submit"
+          value="Generate"
+          onclick="generate_pos_report(event)"
+        />
       </form>
     </div>
     <div class="frmHolder">
       <h1>Member quantity report</h1>
       <form id="frmMemberQuantity">
         <div class="line">
-          <span>Quantity</span> <input type="number" name="memberQuantity" value="4" />
+          <span>Quantity</span>
+          <input type="number" name="memberQuantity" value="4" />
         </div>
         <div class="line">
-        <span>Total</span> <input type="number" name="total" value="4" />
-      </div>
-      <div class="line">
-        <span>At time</span>
-        <input type="time" name="timePicker" pattern="[0-9]{2}h[0-9]{2}" />
-      </div>
-      <div class="line">
+          <span>Total</span> <input type="number" name="total" value="4" />
+        </div>
+        <div class="line">
+          <span>At time</span>
+          <input type="time" name="timePicker" pattern="[0-9]{2}h[0-9]{2}" />
+        </div>
+        <div class="line">
+          <span>Reporter</span>
+          <select class="member" name="member"></select>
+        </div>
 
-        <span>Reporter</span>
-        <select class="member" name="member"></select>
-      </div>
-      
         <input
           type="submit"
           value="Generate"
@@ -272,19 +286,29 @@
         output.focus();
       }
 
-      function generate_pos_report(e){
+      function generate_pos_report(e) {
         e.preventDefault();
         let date = new Date(datePicker.value);
         let strDateMonth = `${date.getDate()}/${date.getMonth()}`;
 
         let form = document.getElementById("frmMemberPos");
-        
-        output.value =`Báo cáo tình hình nhân sự ${form.moments.value} ${strDateMonth}
 
-${members[form.entrance1.value].name} (cửa 1) ${members[form.entrance1.value].number}
-${members[form.entrance2.value].name} (cửa 2) ${members[form.entrance2.value].number}
-${members[form.entrance3.value].name} (cửa 3) ${members[form.entrance3.value].number}
-${members[form.patrol.value].name} (tuần tra) ${members[form.patrol.value].number}`;
+        output.value = `Báo cáo tình hình nhân sự ${
+          form.moments.value
+        } ${strDateMonth}
+
+${members[form.entrance1.value].name} (cửa 1) ${
+          members[form.entrance1.value].number
+        }
+${members[form.entrance2.value].name} (cửa 2) ${
+          members[form.entrance2.value].number
+        }
+${members[form.entrance3.value].name} (cửa 3) ${
+          members[form.entrance3.value].number
+        }
+${members[form.patrol.value].name} (tuần tra) ${
+          members[form.patrol.value].number
+        }`;
         doCopytoClipboard();
       }
 
