@@ -107,7 +107,7 @@
     <div class="frmHolder">
       <h1>Message Ouput</h1>
       <form id="frmMessageOutput">
-        <div id="messageOutPut"></div>
+        <input id="messageOutPut"/>
       </form>
     </div>
     <script>
@@ -151,7 +151,7 @@
         e.preventDefault();
         let date = new Date(datePicker.value);
         let strDateMonth = `${date.getDate()}/${date.getMonth()}`;
-        output.innerText = `Bảng chấm công ngày ${strDateMonth}`;
+        output.value = `Bảng chấm công ngày ${strDateMonth}`;
         doCopytoClipboard();
       }
 
@@ -159,7 +159,7 @@
         e.preventDefault();
         let date = new Date(datePicker.value);
         let strDateMonth = `${date.getDate()}/${date.getMonth()}`;
-        output.innerText = `Bảng chấm công đội Nhà Sạch ngày ${strDateMonth} đội Nhà Sạch`;
+        output.value = `Bảng chấm công đội Nhà Sạch ngày ${strDateMonth} đội Nhà Sạch`;
 
         doCopytoClipboard();
       }
@@ -168,7 +168,7 @@
         e.preventDefault();
         let date = new Date(datePicker.value);
         let strDateMonth = `${date.getDate()}/${date.getMonth()}`;
-        output.innerText = `Em gửi anh bảng chấm công ngày ${strDateMonth}`;
+        output.value = `Em gửi anh bảng chấm công ngày ${strDateMonth}`;
 
         doCopytoClipboard();
       }
@@ -181,7 +181,7 @@
 
         let employeeName = members[0].name;
 
-        output.innerText = `Báo Cáo Ban Quản Lý
+        output.value = `Báo Cáo Ban Quản Lý
 -tình hình ca ngày ${strDateMonth}
 -Lúc:17h30
 -Mục Tiêu: TTTM Lotte mall tây hồ - Hà Nội v
