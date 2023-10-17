@@ -262,18 +262,18 @@
         Array.from(document.querySelectorAll(".frmHolder")).forEach((div) => {
           let a = document.createElement("a");
           a.innerText = div.querySelector("h4").innerText;
-          a.href = "#" + div.querySelector("form").id;
+          a.data = "#" + div.querySelector("form").id;
           a.onclick = function (event) {
             event.preventDefault();
-            selectedWizard = event.target.href.slice(1);
+            selectedWizard = event.target.data.slice(1);
 
-            Array.from(document.querySelectorAll("frmHolder")).forEach(
+            Array.from(document.querySelectorAll(".frmHolder")).forEach(
               (div) => {
                 div.classList.remove("visible");
               }
             );
-
-            document.getElementById(selectedWizard).classList.add("visible");
+            
+            document.getElementById(selectedWizard).parentElement.classList.add("visible");
           };
           navBar.appendChild(a);
         });
