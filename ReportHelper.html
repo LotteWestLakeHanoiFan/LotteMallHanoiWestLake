@@ -14,6 +14,10 @@
           background: white;
       }
 
+      a, a:visited{
+        color: blue;
+      }
+
       .stick-left-nav{
         position:fixed;
         top: 0px;
@@ -29,6 +33,15 @@
       }
       .frmHolder{
           margin-top:15px;
+          display: none;
+      }
+
+      .frmHolder.visible{
+        display: block;
+      }
+
+      .frmHolder.forceVisible{
+        display: block;
       }
 
       .stick, .frmHolder{
@@ -62,12 +75,15 @@
     </style>
   </head>
   <body>
-    <div class="stick">Report Date: <input type="date" id="datePicker" /></div>
+    <!-- <div class="stick">Report Date: <input type="date" id="datePicker" /></div> -->
     <div class="stick-left-nav" id="navBar"></div>
 
     <div class="frmHolder">
       <h4>Closing report</h4>
       <form id="frmClosingReport">
+        <div class="line">
+          <span>Date</span><input type="date" name="date" />
+        </div>
         <div class="line">
           <span>time</span> <input type="time" name="timePicker" />
         </div>
@@ -86,6 +102,9 @@
     <div class="frmHolder">
       <h4>Member positions report</h4>
       <form id="frmMemberPos">
+        <div class="line">
+          <span>Date</span><input type="date" name="date" />
+        </div>
         <div class="line">
           <span>Ship </span>
           <select name="moments">
@@ -121,6 +140,9 @@
       <h4>Member quantity report</h4>
       <form id="frmMemberQuantity">
         <div class="line">
+          <span>Date</span><input type="date" name="date" />
+        </div>
+        <div class="line">
           <span>Quantity</span>
           <input type="number" name="memberQuantity" value="1" />
         </div>
@@ -146,6 +168,11 @@
     <div class="frmHolder">
       <h4>Thang Loi Member checkin report</h4>
       <form id="frmThangLoiMemberCheckinReport">
+        <div class="line">
+          <span>Date </span>
+          <input type="date" name="date" />
+        </div>
+
         <input
           type="submit"
           value="Generate"
@@ -157,6 +184,8 @@
     <div class="frmHolder">
       <h4>Central Retail Member checkins report</h4>
       <form id="frmCentralRetailMemberReport">
+        <input type="date" name="date" />
+
         <input
           type="submit"
           value="Generate"
@@ -168,6 +197,10 @@
     <div class="frmHolder">
       <h4>Nha Sach Ship check in report</h4>
       <form id="frmNhaSachShipCheckInReport">
+        <div class="line">
+          <span>Date</span>
+          <input type="date" name="date" />
+        </div>
         <input
           type="submit"
           value="Generate"
@@ -176,13 +209,15 @@
       </form>
     </div>
 
-    <div class="frmHolder">
+    <div class="frmHolder forceVisible">
       <h4>Message Ouput</h4>
       <form id="frmMessageOutput">
         <textarea id="messageOutPut"></textarea>
+        <button onclick="doCopytoClipboard()">Copy</button>
       </form>
     </div>
     <script>
+      let selectedWizard = "";
       let members = [
         { name: "Lê Quang Dũng", number: "0386046481" },
         { name: "Nguyễn Hằng Nga", number: "0941917121" },
@@ -194,8 +229,19 @@
         { name: "Đỗ Thái Hà", number: "0828291468" },
       ];
 
-      const datePicker = document.getElementById("datePicker");
-      datePicker.valueAsDate = new Date();
+      // const datePicker = document.getElementById("datePicker");
+      // datePicker.valueAsDate = new Date();
+
+      function initDatePickers() {
+        Array.from(document.querySelectorAll("input[type=date]")).forEach(
+          (input) => {
+            input.valueAsDate = new Date();
+          }
+        );
+      }
+
+      initDatePickers();
+
       const output = document.getElementById("messageOutPut");
       function populateMemberSelects() {
         let collection = document.querySelectorAll(".member");
@@ -215,22 +261,34 @@
           let a = document.createElement("a");
           a.innerText = div.querySelector("h4").innerText;
           a.href = "#" + div.querySelector("form").id;
+          a.onclick = function (event) {
+            event.preventDefault();
+            selectedWizard = event.target.href.slice(1);
+
+            Array.from(document.querySelectorAll("frmHolder")).forEach(
+              (div) => {
+                div.classList.remove("visible");
+              }
+            );
+
+            document.getElementById(selectedWizard).classList.add("visible");
+          };
           navBar.appendChild(a);
         });
       }
 
       function generate_ThangLoi_ShipCard(e) {
         e.preventDefault();
-        let date = new Date(datePicker.value);
-        let strDateMonth = `${date.getDate()}/${date.getMonth()}`;
+        let date = new Date(frmThangLoiMemberCheckinReport.date.value);
+        let strDateMonth = `${date.getDate()}/${date.getMonth() + 1}`;
         output.value = `Bảng chấm công ngày ${strDateMonth}`;
         doCopytoClipboard();
       }
 
       function generate_NhaSach_ShipCard(e) {
         e.preventDefault();
-        let date = new Date(datePicker.value);
-        let strDateMonth = `${date.getDate()}/${date.getMonth()}`;
+        let date = new Date(frmNhaSachShipCheckInReport.date.value);
+        let strDateMonth = `${date.getDate()}/${date.getMonth() + 1}`;
         output.value = `Bảng chấm công đội Nhà Sạch ngày ${strDateMonth}`;
 
         doCopytoClipboard();
@@ -238,8 +296,8 @@
 
       function generate_CentralRetail_Shipcard(e) {
         e.preventDefault();
-        let date = new Date(datePicker.value);
-        let strDateMonth = `${date.getDate()}/${date.getMonth()}`;
+        let date = new Date(frmCentralRetailMemberReport.date.value);
+        let strDateMonth = `${date.getDate()}/${date.getMonth() + 1}`;
         output.value = `Em gửi anh bảng chấm công ngày ${strDateMonth}`;
 
         doCopytoClipboard();
@@ -247,8 +305,8 @@
 
       function generate_Squad_Quantity(event) {
         event.preventDefault();
-        let date = new Date(datePicker.value);
-        let strDateMonth = `${date.getDate()}/${date.getMonth()}`;
+        let date = new Date(frmMemberQuantity.date.value);
+        let strDateMonth = `${date.getDate()}/${date.getMonth() + 1}`;
 
         let form = document.getElementById("frmMemberQuantity");
 
@@ -278,10 +336,9 @@
       }
       function generate_Closing_Message(event) {
         event.preventDefault();
-        let date = new Date(datePicker.value);
-        let strDateMonth = `${date.getDate()}/${date.getMonth()}`;
-
         let form = document.getElementById("frmClosingReport");
+        let date = new Date(form.date.value);
+        let strDateMonth = `${date.getDate()}/${date.getMonth() + 1}`;
 
         let employeeName = members[Number.parseInt(form.reporter.value)].name;
         let time = form.timePicker.value;
@@ -304,8 +361,8 @@
 
       function generate_pos_report(e) {
         e.preventDefault();
-        let date = new Date(datePicker.value);
-        let strDateMonth = `${date.getDate()}/${date.getMonth()}`;
+        let date = new Date(frmMemberPos.date.value);
+        let strDateMonth = `${date.getDate()}/${date.getMonth() + 1}`;
 
         let form = document.getElementById("frmMemberPos");
 
