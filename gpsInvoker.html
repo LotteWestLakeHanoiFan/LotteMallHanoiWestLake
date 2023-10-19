@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head></head>
+
+<body>
+    <form id="gpsInvoker">
+        <button type="button" onclick="invokeGPSCoords">invoke</button>
+        <texarea name="output"></texarea>
+    </form>
+    <script>
+        function invokeGPSCoords(){
+            if(navigator.geolocation){
+                navigator.geolocation.getCurrentPosition(showInvokeResult)
+            } else {
+                alert("Your browser does not support geolocation")
+            }
+            
+        }
+        
+        function showInvokeResult(pos){
+            let coords = pos.coords;
+            gpsInvoker.output.value= `
+                Altitude: ${coords.altitude}\n
+                Latitude: ${coords.latitude}\n
+                Longtitude: ${coords.longtitude}\n
+                With accuracy: ${coords.accuracy} meters
+            `
+        }
+    </script>
+</body>
+
+</html>
