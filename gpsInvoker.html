@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html>
-  <head></head>
+  <head>
+    <style>
+        #btnTracking[disabled]{
+            background-color: red;
+            color:white;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  </head>
 
   <body>
     <form id="gpsInvoker">
@@ -14,10 +23,11 @@
       let gpsInvoker = document.getElementById("gpsInvoker");
       let output = gpsInvoker.querySelector("div[name=output]");
       let btnTracking = document.getElementById("btnTracking");
+      let lastCoords = null;
       let trackLoop = null;
 
       function stopTrackingMe(){
-        btnTracking.enabled = true;
+        btnTracking.disabled = true;
         clearInterval(trackLoop);
         trackLoop=null;
       }
@@ -36,7 +46,7 @@
 
       function trackMe(){
         try {
-            btnTracking.enabled = false;
+            btnTracking.disabled = true;
             if(navigator.geolocation){
                 trackLoop = setInterval(
                     ()=>navigator.geolocation.getCurrentPosition(showInvokeResult, showInvokeError),1700
@@ -52,12 +62,17 @@
       function showInvokeResult(pos) {
         // alert("invoke");
         let coords = pos.coords;
-        output.innerHTML = `
-            Altitude: ${coords.altitude}\n
-            Latitude: ${coords.latitude}\n
-            Longtitude: ${coords.longitude}\n
-            With accuracy: ${coords.accuracy} meters\n
-            ` + output.innerHTML;
+        if (JSON.stringify(lastCoords) !== JSON.stringify(coords))
+        {
+            output.innerHTML = `
+                at: ${pos.timestamp}\n
+                Altitude: ${coords.altitude}\n
+                Latitude: ${coords.latitude}\n
+                Longtitude: ${coords.longitude}\n
+                With accuracy: ${coords.accuracy} meters\n
+                ` + output.innerHTML;
+        }
+        lastCoords = coords;
         // alert(gpsInvoker.output.value);
       }
 
