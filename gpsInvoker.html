@@ -1,40 +1,37 @@
 <!DOCTYPE html>
 <html>
+  <head></head>
 
-<head></head>
-
-<body>
+  <body>
     <form id="gpsInvoker">
-        <button type="button" onclick="invokeGPSCoords()">invoke</button>
-        <textarea name="output"></textarea>
+      <button type="button" onclick="invokeGPSCoords()">invoke</button>
+      <textarea name="output"></textarea>
     </form>
     <script>
-        let gpsInvoker = document.getElementById('gpsInvoker')
-        function invokeGPSCoords(){
-            try{
-            if(navigator.geolocation){
-                navigator.geolocation.getCurrentPosition(showInvokeResult)
-            } else {
-                alert("Your browser does not support geolocation")
-            }
-            }catch(ex){
-                gpsInvoker.output.value =ex.message;
-            }
-            
+      let gpsInvoker = document.getElementById("gpsInvoker");
+      function invokeGPSCoords() {
+        try {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showInvokeResult);
+          } else {
+            alert("Your browser does not support geolocation");
+          }
+        } catch (ex) {
+          gpsInvoker.output.value = ex.message;
         }
-        
-        function showInvokeResult(pos){
-            alert('invoke')
-            let coords = pos.coords;
-            alert(gpsInvoker.output.value);
-            gpsInvoker.output.value= `
-                Altitude: ${coords.altitude}\n
-                Latitude: ${coords.latitude}\n
-                Longtitude: ${coords.longtitude}\n
-                With accuracy: ${coords.accuracy} meters
-            `
-        }
-    </script>
-</body>
+      }
 
+      function showInvokeResult(pos) {
+        alert("invoke");
+        let coords = pos.coords;
+        gpsInvoker.querySelector("textare[name=output]").value = `
+            Altitude: ${coords.altitude}\n
+            Latitude: ${coords.latitude}\n
+            Longtitude: ${coords.longtitude}\n
+            With accuracy: ${coords.accuracy} meters
+            `;
+        alert(gpsInvoker.output.value);
+      }
+    </script>
+  </body>
 </html>
