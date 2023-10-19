@@ -39,7 +39,7 @@
             btnTracking.enabled = false;
             if(navigator.geolocation){
                 trackLoop = setInterval(
-                    ()=>navigator.geolocation.getCurrentPosition(showInvokeResult, showInvokeError),700
+                    ()=>navigator.geolocation.getCurrentPosition(showInvokeResult, showInvokeError),1700
                 );
             } else {
                 alert ("Your browser does not support geolocation");
