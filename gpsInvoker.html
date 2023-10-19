@@ -5,33 +5,52 @@
   <body>
     <form id="gpsInvoker">
       <button type="button" onclick="invokeGPSCoords()">invoke</button>
+      <button type="button" onclick="trackMe()">Track me!</button>
       <div name="output" style="display: block; width:fit-content; height: fit-content; white-space: pre;"></div>
     </form>
     <script>
       let gpsInvoker = document.getElementById("gpsInvoker");
+      let output = gpsInvoker.querySelector("div[name=output]");
+
       function invokeGPSCoords() {
         try {
           if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showInvokeResult);
+            navigator.geolocation.getCurrentPosition(showInvokeResult,showInvokeError);
           } else {
             alert("Your browser does not support geolocation");
           }
         } catch (ex) {
-          gpsInvoker.output.value = ex.message;
+          output.innerHTML = ex.message;
+        }
+      }
+
+      function trackMe(){
+        try {
+            if(navigator.geolocation){
+                navigator.geolocation.watchPosition(showInvokeResult, showInvokeError);
+            } else {
+                alert ("Your browser does not support geolocation");
+            }
+        } catch(ex){
+            output.innerHTML = ex.message;
         }
       }
 
       function showInvokeResult(pos) {
         // alert("invoke");
         let coords = pos.coords;
-        gpsInvoker.querySelector("div[name=output]").innerHTML +=`
+        output.innerHTML += `
             Altitude: ${coords.altitude}\n
             Latitude: ${coords.latitude}\n
             Longtitude: ${coords.longitude}\n
             With accuracy: ${coords.accuracy} meters\n
-            `;
+            ` + output.innerHTML;
         // alert(gpsInvoker.output.value);
+      }
+
+      function showInvokeError(err){
+        output.innerHTML += `ERROR ${err.code}: ${err.message}` + output.innerHTML;
       }
     </script>
   </body>
-</html>
+</html>~
