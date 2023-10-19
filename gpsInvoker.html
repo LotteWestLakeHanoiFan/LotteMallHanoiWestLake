@@ -5,12 +5,22 @@
   <body>
     <form id="gpsInvoker">
       <button type="button" onclick="invokeGPSCoords()">invoke</button>
-      <button type="button" onclick="trackMe()">Track me!</button>
+      <button type="button" id="btnTracking"  onclick="trackMe()">Tracking!</button>
+      <button type="button" onclick="stopTrackingMe()">Stop tracking!</button>
+
       <div name="output" style="display: block; width:fit-content; height: fit-content; white-space: pre;"></div>
     </form>
     <script>
       let gpsInvoker = document.getElementById("gpsInvoker");
       let output = gpsInvoker.querySelector("div[name=output]");
+      let btnTracking = document.getElementById("btnTracking");
+      let trackLoop = null;
+
+      function stopTrackingMe(){
+        btnTracking.enabled = true;
+        clearInterval(trackLoop);
+        trackLoop=null;
+      }
 
       function invokeGPSCoords() {
         try {
@@ -26,8 +36,11 @@
 
       function trackMe(){
         try {
+            btnTracking.enabled = false;
             if(navigator.geolocation){
-                navigator.geolocation.watchPosition(showInvokeResult, showInvokeError);
+                trackLoop = setInterval(
+                    ()=>navigator.geolocation.getCurrentPosition(showInvokeResult, showInvokeError),300
+                );
             } else {
                 alert ("Your browser does not support geolocation");
             }
