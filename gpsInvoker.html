@@ -52,7 +52,7 @@
       function showInvokeResult(pos) {
         // alert("invoke");
         let coords = pos.coords;
-        output.innerHTML += `
+        output.innerHTML = `
             Altitude: ${coords.altitude}\n
             Latitude: ${coords.latitude}\n
             Longtitude: ${coords.longitude}\n
@@ -62,7 +62,7 @@
       }
 
       function showInvokeError(err){
-        output.innerHTML += `ERROR ${err.code}: ${err.message}` + output.innerHTML;
+        output.innerHTML = `ERROR ${err.code}: ${err.message}` + output.innerHTML;
       }
     </script>
   </body>
