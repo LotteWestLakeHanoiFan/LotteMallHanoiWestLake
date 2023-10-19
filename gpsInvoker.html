@@ -26,6 +26,7 @@
         function showInvokeResult(pos){
             alert('invoke')
             let coords = pos.coords;
+            alert(gpsInvoker.output.value);
             gpsInvoker.output.value= `
                 Altitude: ${coords.altitude}\n
                 Latitude: ${coords.latitude}\n
