@@ -5,7 +5,7 @@
   <body>
     <form id="gpsInvoker">
       <button type="button" onclick="invokeGPSCoords()">invoke</button>
-      <textarea name="output"></textarea>
+      <div name="output" style="display: block; width:fit-content; height: fit-content; white-space: pre;"></div>
     </form>
     <script>
       let gpsInvoker = document.getElementById("gpsInvoker");
@@ -22,14 +22,15 @@
       }
 
       function showInvokeResult(pos) {
-        alert("invoke");
+        // alert("invoke");
         let coords = pos.coords;
-        gpsInvoker.querySelector("textarea[name=output]").value = `Altitude: ${coords.altitude}\n
+        gpsInvoker.querySelector("div[name=output]").innerHTML +=`
+            Altitude: ${coords.altitude}\n
             Latitude: ${coords.latitude}\n
             Longtitude: ${coords.longitude}\n
-            With accuracy: ${coords.accuracy} meters
+            With accuracy: ${coords.accuracy} meters\n
             `;
-        alert(gpsInvoker.output.value);
+        // alert(gpsInvoker.output.value);
       }
     </script>
   </body>
