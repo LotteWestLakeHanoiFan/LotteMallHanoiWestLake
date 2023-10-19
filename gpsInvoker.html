@@ -5,15 +5,19 @@
 
 <body>
     <form id="gpsInvoker">
-        <button type="button" onclick="invokeGPSCoords">invoke</button>
+        <button type="button" onclick="invokeGPSCoords()">invoke</button>
         <textarea name="output"></textarea>
     </form>
     <script>
         function invokeGPSCoords(){
+            try{
             if(navigator.geolocation){
                 navigator.geolocation.getCurrentPosition(showInvokeResult)
             } else {
                 alert("Your browser does not support geolocation")
+            }
+            }catch(ex){
+                gpsInvoker.output.value =ex.message;
             }
             
         }
