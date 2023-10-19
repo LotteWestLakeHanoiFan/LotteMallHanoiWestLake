@@ -9,6 +9,7 @@
         <textarea name="output"></textarea>
     </form>
     <script>
+        let gpsInvoker = document.getElementById('gpsInvoker')
         function invokeGPSCoords(){
             try{
             if(navigator.geolocation){
@@ -23,6 +24,7 @@
         }
         
         function showInvokeResult(pos){
+            alert(invoke)
             let coords = pos.coords;
             gpsInvoker.output.value= `
                 Altitude: ${coords.altitude}\n
