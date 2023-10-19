@@ -24,10 +24,9 @@
       function showInvokeResult(pos) {
         alert("invoke");
         let coords = pos.coords;
-        gpsInvoker.querySelector("textare[name=output]").value = `
-            Altitude: ${coords.altitude}\n
+        gpsInvoker.querySelector("textare[name=output]").value = `Altitude: ${coords.altitude}\n
             Latitude: ${coords.latitude}\n
-            Longtitude: ${coords.longtitude}\n
+            Longtitude: ${coords.longitude}\n
             With accuracy: ${coords.accuracy} meters
             `;
         alert(gpsInvoker.output.value);
