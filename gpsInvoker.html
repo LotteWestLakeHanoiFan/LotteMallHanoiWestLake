@@ -16,7 +16,8 @@
     <form id="gpsInvoker">
         <button type="button" onclick="invokeGPSCoords()">invoke</button>
         <button type="button" id="btnTracking" onclick="trackMe()">Tracking!</button>
-        <button type="button" onclick="stopTrackingMe()">Stop tracking!</button>
+        <button type="button" onclick="stopTrackingMe()">Stop tracking!</button>(
+        <button type="button" onclick="clearOutput()">Clear output</button>
 
         <div name="output" style="display: block; width:fit-content; height: fit-content; white-space: pre;"></div>
     </form>
@@ -26,6 +27,10 @@
         let btnTracking = document.getElementById("btnTracking");
         let lastCoords = null;
         let trackLoop = null;
+
+        function clearOutput(){
+            output.innerHTML = ""
+        }
 
         function stopTrackingMe() {
             btnTracking.disabled = false;
