@@ -27,7 +27,7 @@
         let output = gpsInvoker.querySelector("div[name=output]");
         let btnTracking = document.getElementById("btnTracking");
         let lastCoords = null;
-        let trackLoop = null;
+        let trackLoop = {};
 
         function clearOutput(){
             output.innerHTML = ""
