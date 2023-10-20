@@ -1,102 +1,107 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <style>
-        #btnTracking[disabled]{
+        #btnTracking[disabled] {
             background-color: red;
-            color:white;
+            color: white;
         }
     </style>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  </head>
+</head>
 
-  <body>
+<body>
     <form id="gpsInvoker">
-      <button type="button" onclick="invokeGPSCoords()">invoke</button>
-      <button type="button" id="btnTracking"  onclick="trackMe()">Tracking!</button>
-      <button type="button" onclick="stopTrackingMe()">Stop tracking!</button>
+        <button type="button" onclick="invokeGPSCoords()">invoke</button>
+        <button type="button" id="btnTracking" onclick="trackMe()">Tracking!</button>
+        <button type="button" onclick="stopTrackingMe()">Stop tracking!</button>
 
-      <div name="output" style="display: block; width:fit-content; height: fit-content; white-space: pre;"></div>
+        <div name="output" style="display: block; width:fit-content; height: fit-content; white-space: pre;"></div>
     </form>
     <script>
-      let gpsInvoker = document.getElementById("gpsInvoker");
-      let output = gpsInvoker.querySelector("div[name=output]");
-      let btnTracking = document.getElementById("btnTracking");
-      let lastCoords = null;
-      let trackLoop = null;
+        let gpsInvoker = document.getElementById("gpsInvoker");
+        let output = gpsInvoker.querySelector("div[name=output]");
+        let btnTracking = document.getElementById("btnTracking");
+        let lastCoords = null;
+        let trackLoop = null;
 
-      function stopTrackingMe(){
-        btnTracking.disabled = false;
-        clearInterval(trackLoop);
-        trackLoop=null;
-      }
-
-      function invokeGPSCoords() {
-        try {
-          if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showInvokeResult,showInvokeError);
-          } else {
-            alert("Your browser does not support geolocation");
-          }
-        } catch (ex) {
-          output.innerHTML = ex.message;
+        function stopTrackingMe() {
+            btnTracking.disabled = false;
+            clearInterval(trackLoop);
+            trackLoop = null;
         }
-      }
 
-      function trackMe(){
-        try {
-            btnTracking.disabled = true;
-            if(navigator.geolocation){
-                trackLoop = setInterval(
-                    ()=>navigator.geolocation.getCurrentPosition(showTrackResult, showInvokeError, {enableHighAccuracy:true}),1700
-                );
-            } else {
-                alert ("Your browser does not support geolocation");
+        function invokeGPSCoords() {
+            try {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(showInvokeResult, showInvokeError);
+                } else {
+                    alert("Your browser does not support geolocation");
+                }
+            } catch (ex) {
+                output.innerHTML = ex.message;
             }
-        } catch(ex){
-            output.innerHTML = ex.message;
         }
-      }
 
-      function showInvokeResult(pos) {
-        // alert("invoke");
-        let coords = pos.coords;
-        // if (JSON.stringify(lastCoords) !== JSON.stringify(coords))
-        {
-            output.innerHTML = `
+        function trackMe() {
+            try {
+                btnTracking.disabled = true;
+                if (navigator.geolocation) {
+                    trackLoop = setInterval(
+                        () => navigator.geolocation.getCurrentPosition(showTrackResult, showInvokeError, { enableHighAccuracy: true }), 1700
+                    );
+                } else {
+                    alert("Your browser does not support geolocation");
+                }
+            } catch (ex) {
+                output.innerHTML = ex.message;
+            }
+        }
+
+        function showInvokeResult(pos) {
+            // alert("invoke");
+            let coords = pos.coords;
+            // if (JSON.stringify(lastCoords) !== JSON.stringify(coords))
+            {
+                output.innerHTML = `
                 at: ${pos.timestamp}\n
                 Altitude: ${coords.altitude}\n
                 Latitude: ${coords.latitude}\n
                 Longtitude: ${coords.longitude}\n
                 With accuracy: ${coords.accuracy} meters\n
                 ` + output.innerHTML;
+            }
+            lastCoords = coords;
+            // alert(gpsInvoker.output.value);
         }
-        lastCoords = coords;
-        // alert(gpsInvoker.output.value);
-      }
 
-      function showTrackResult(pos) {
-        // alert("invoke");
-        let {altitude, latitude, longitude, accuracy, } =  {...(pos.coords)};
-        let coords = {altitude, latitude, longitude, accuracy} 
-        if (JSON.stringify(lastCoords) !== JSON.stringify(coords))
-        {
-            output.innerHTML = `
+        function showTrackResult(pos) {
+            // alert("invoke");
+            let coords = {
+                altitude: pos.coords.altitude,
+                latitude: pos.coords.latitude, 
+                longitude: pos.coords.longitude,
+                accuracy: pos.coords.accuracy
+            }
+            if (JSON.stringify(lastCoords) !== JSON.stringify(coords)) {
+                output.innerHTML = `
                 at: ${pos.timestamp}\n
                 Altitude: ${coords.altitude}\n
                 Latitude: ${coords.latitude}\n
                 Longtitude: ${coords.longitude}\n
                 With accuracy: ${coords.accuracy} meters\n
                 ` + output.innerHTML;
+            }
+            lastCoords = coords;
+            // alert(gpsInvoker.output.value);
         }
-        lastCoords = coords;
-        // alert(gpsInvoker.output.value);
-      }
 
-      function showInvokeError(err){
-        output.innerHTML = `ERROR ${err.code}: ${err.message}` + output.innerHTML;
-      }
+        function showInvokeError(err) {
+            output.innerHTML = `ERROR ${err.code}: ${err.message}` + output.innerHTML;
+        }
     </script>
-  </body>
+</body>
+
 </html>
