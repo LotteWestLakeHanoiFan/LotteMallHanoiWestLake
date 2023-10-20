@@ -18,6 +18,7 @@
         <button type="button" id="btnTracking" onclick="trackMe()">Tracking!</button>
         <button type="button" onclick="stopTrackingMe()">Stop tracking!</button>(
         <button type="button" onclick="clearOutput()">Clear output</button>
+        <button type="button" onclick="calculatePointGPSCoords()">Get Point coordinates</button>
 
         <div name="output" style="display: block; width:fit-content; height: fit-content; white-space: pre;"></div>
     </form>
@@ -90,7 +91,7 @@
                 longitude: pos.coords.longitude,
                 accuracy: pos.coords.accuracy
             }
-            if (JSON.stringify(lastCoords) !== JSON.stringify(coords)) {
+            if (compareCoords(coords, lastCoords)) {
                 output.innerHTML = `
                 at: ${pos.timestamp}\n
                 Altitude: ${coords.altitude}\n
@@ -98,13 +99,81 @@
                 Longtitude: ${coords.longitude}\n
                 With accuracy: ${coords.accuracy} meters\n
                 ` + output.innerHTML;
+            } else {
+                output.innerHTML = `
+                at: ${pos.timestamp}\n
+                skipped\n
+                ` + output.innerHTML;
             }
             lastCoords = coords;
             // alert(gpsInvoker.output.value);
         }
 
+        function calculatePointGPSCoords(){
+            let i = 0;
+            let delayBetweenInvoking = 1500;
+            let max = 9;
+            let stack = [];
+            clearOutput();
+            let attempt = (i)=>{
+                output.innerHTML = `#${i+1}` + output.innerHTML
+            }
+            let printPointCoords = (point)=>{
+                output.innerHTML = `
+                Average point's coordinates:\n
+                Altitude: ${point.altitude}\n
+                Latitude: ${point.latitude}\n
+                Longtitude: ${point.longitude}\n
+                
+                ` + output.innerHTML;
+            }
+            let trackLoop = setInterval(
+                        () => navigator.geolocation.getCurrentPosition(
+                            (pos)=>{
+                                stack[i]={
+                                    altitude: pos.coords.altitude,
+                                    longitude: pos.coords.longitude,
+                                    latitude: pos.coords.latitude
+                                };
+
+                                showTrackResult(pos);
+                                attempt(i)
+                                i++;
+                                if (i> max){
+                                    clearInterval(trackLoop)
+                                    let sum = {
+                                        altitude: 0,
+                                        longitude: 0,
+                                        latitude: 0
+                                    }
+                                    stack.reduce((sum,item)=>{
+                                        sum.altitude += item.altitude;
+                                        sum.longitude += item.longitude;
+                                        sum.latitude += item.latitude;
+                                        return sum
+                                    }, sum)
+                                    sum = {
+                                        altitude: sum.altitude/max, 
+                                        longitude: sum.longitude/max,
+                                        latitude: sum.latitude/max,
+                                    }
+                                    
+                                    printPointCoords(sum)
+
+                                }
+                            }, 
+                            showInvokeError, { enableHighAccuracy: true }), delayBetweenInvoking
+                    );
+        }
+
         function showInvokeError(err) {
             output.innerHTML = `ERROR ${err.code}: ${err.message}` + output.innerHTML;
+        }
+
+        function compareCoords(first, second){
+            return first.altitude === second.altitude &&
+            first.latitude === second.latitude &&
+            first.longitude === second.longitude
         }
     </script>
 </body>
