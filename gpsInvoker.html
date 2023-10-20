@@ -157,9 +157,9 @@
                                         return sum
                                     }, sum)
                                     sum = {
-                                        altitude: sum.altitude/max, 
-                                        longitude: sum.longitude/max,
-                                        latitude: sum.latitude/max,
+                                        altitude: sum.altitude/(max+1), 
+                                        longitude: sum.longitude/(max+1),
+                                        latitude: sum.latitude/(max+1),
                                     }
                                     
                                     printPointCoords(sum)
