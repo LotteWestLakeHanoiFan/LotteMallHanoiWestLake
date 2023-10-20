@@ -78,7 +78,7 @@
 
       function showTrackResult(pos) {
         // alert("invoke");
-        let coords = pos.coords;
+        let coords = {altitude, latitude, longitude, accuracy} =  {...pos.coords};
         if (JSON.stringify(lastCoords) !== JSON.stringify(coords))
         {
             output.innerHTML = `
