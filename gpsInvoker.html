@@ -27,7 +27,11 @@
         let output = gpsInvoker.querySelector("div[name=output]");
         let btnTracking = document.getElementById("btnTracking");
         let lastCoords = null;
-        let trackLoop = {};
+        let trackLoop = {
+            altitude:0,
+            latitude:0,
+            longitude:0,
+        };
 
         function clearOutput(){
             output.innerHTML = ""
