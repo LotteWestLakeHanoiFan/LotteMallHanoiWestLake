@@ -1,329 +1,383 @@
 <html>
-  <head>
-    <title>Reports Helper</title>
-    <style>
-      body{
-        box-sizing: border-box;
-        padding: 25px;
-      }
-      .stick{
-          position:fixed;
-          top:0px;
-          right: 0px;
-          width: 200px;
-          background: white;
-      }
 
-      a, a:visited{
-        color: blue;
-      }
+<head>
+  <title>Reports Helper</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      box-sizing: border-box;
+      padding: 25px;
+    }
 
-      .stick-left-nav{
-        position:fixed;
-        top: 0px;
-        left: 0;
-        width:200px;
-        box-sizing: border-box;
-        padding: 10px;
-        border: 1px solid red;
-      }
-      .stick-left-nav>a{
-        display: block;
-        margin-bottom: 10px;
-      }
-      .frmHolder{
-          margin-top:15px;
-          display: none;
-      }
+    .stick {
+      position: fixed;
+      top: 0px;
+      right: 0px;
+      width: 200px;
+      background: white;
+    }
 
-      .frmHolder.visible{
-        display: block;
-      }
+    a,
+    a:visited {
+      color: blue;
+    }
 
-      .frmHolder.forceVisible{
-        display: block;
-      }
+    .stick-left-nav {
+      display: inline-block;
+      box-sizing: border-box;
+      padding: 10px;
+      border: 1px solid red;
+    }
 
-      .stick, .frmHolder{
-          padding: 15px;
-          box-sizing:border-box;
-          border: 1px solid gray;
-          margin-left: 200px
-      }
-      .stick{
-        margin-left: 0;
-      }
-      .line{
-        margin-bottom: 10px;
-      }
-      .line >span{
-        display: inline-block;
-        margin-right: 20px;
-      }
+    .stick-left-nav>a {
+      display: inline-block;
+      margin-left: 10px;
+      border: 1px solid black;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
 
-      #messageOutPut{
-        display: inline-block;
-        width: 100%;
-        height: 80px;
-        resize: vertical;
-      }
+    .frmHolder {
+      margin-top: 15px;
+      display: none;
+    }
 
-      input,select {
-        padding: 10px;
-        font-size: 17px;
-      }
-    </style>
-  </head>
-  <body>
-    <!-- <div class="stick">Report Date: <input type="date" id="datePicker" /></div> -->
-    <div class="stick-left-nav" id="navBar"></div>
+    .frmHolder.visible {
+      display: inline-block;
+    }
 
-    <div class="frmHolder">
-      <h4>Closing report</h4>
-      <form id="frmClosingReport">
-        <div class="line">
-          <span>Date</span><input type="date" name="date" />
-        </div>
-        <div class="line">
-          <span>time</span> <input type="time" name="timePicker" />
-        </div>
-        <div class="line">
-          <span>Reporter</span
-          ><select class="member" name="reporter"></select>
-        </div>
-        <input
-          type="submit"
-          value="Generate"
-          onclick="generate_Closing_Message(event)"
-        />
-      </form>
-    </div>
+    .frmHolder.forceVisible {
+      display: inline-block;
+    }
 
-    <div class="frmHolder">
-      <h4>Member positions report</h4>
-      <form id="frmMemberPos">
-        <div class="line">
-          <span>Date</span><input type="date" name="date" />
-        </div>
-        <div class="line">
-          <span>Ship </span>
-          <select name="moments">
-            <option value="sáng">Sáng</option>
-            <option value="tối">Tối</option>
-          </select>
-        </div>
-        <div class="line">
-          <span>Entrance 1</span
-          ><select class="member" name="entrance1"></select>
-        </div>
-        <div class="line">
-          <span>Entrance 2</span
-          ><select class="member" name="entrance2"></select>
-        </div>
-        <div class="line">
-          <span>Entrance 3</span
-          ><select class="member" name="entrance3"></select>
-        </div>
-        <div class="line">
-          <span>Patrol</span
-          ><select class="member" name="patrol"></select>
-        </div>
+    .stick,
+    .frmHolder {
+      padding: 15px;
+      box-sizing: border-box;
+      border: 1px solid gray;
+      width: 100%;
+      /* margin-left: 200px */
+    }
 
-        <input
-          type="submit"
-          value="Generate"
-          onclick="generate_pos_report(event)"
-        />
-      </form>
-    </div>
-    <div class="frmHolder">
-      <h4>Member quantity report</h4>
-      <form id="frmMemberQuantity">
-        <div class="line">
-          <span>Date</span><input type="date" name="date" />
-        </div>
-        <div class="line">
-          <span>Quantity</span>
-          <input type="number" name="memberQuantity" value="1" />
-        </div>
-        <div class="line">
-          <span>Total</span> <input type="number" name="total" value="1" />
-        </div>
-        <div class="line">
-          <span>time</span>
-          <input type="time" name="timePicker" pattern="[0-9]{2}h[0-9]{2}" />
-        </div>
-        <div class="line">
-          <span>Reporter</span>
-          <select class="member" name="member"></select>
-        </div>
+    .stick {
+      margin-left: 0;
+    }
 
-        <input
-          type="submit"
-          value="Generate"
-          onclick="generate_Squad_Quantity(event)"
-        />
-      </form>
-    </div>
-    <div class="frmHolder">
-      <h4>Thang Loi Member checkin report</h4>
-      <form id="frmThangLoiMemberCheckinReport">
-        <div class="line">
-          <span>Date </span>
-          <input type="date" name="date" />
-        </div>
+    .line {
+      margin-bottom: 10px;
+    }
 
-        <input
-          type="submit"
-          value="Generate"
-          onclick="generate_ThangLoi_ShipCard(event)"
-        />
-      </form>
-    </div>
+    .line>span {
+      display: inline-block;
+      margin-right: 20px;
+    }
 
-    <div class="frmHolder">
-      <h4>Central Retail Member checkins report</h4>
-      <form id="frmCentralRetailMemberReport">
+    #messageOutPut {
+      display: inline-block;
+      width: 100%;
+      height: 280px;
+      resize: vertical;
+      font-size:17px;
+    }
+    
+    .role{
+      margin-left: 10px;
+    }
+
+    input,
+    select {
+      padding: 10px;
+      font-size: 17px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- <div class="stick">Report Date: <input type="date" id="datePicker" /></div> -->
+  <div class="stick-left-nav" id="navBar"></div>
+
+  <div class="frmHolder">
+    <h4>End 10PM Ship Report</h4>
+    <form id="frmEndShipAt10PM">
+      <div class="line">
+        <span>Quantity</span>
+        <input type="number" name="memberQuantity" value="3" />
+      </div>
+      <div class="line">
+        <span>date</span><input type="date" name="date" />
+      </div>
+      <div class="line">
+        <span>time</span><input type="time" name="timePicker" />
+      </div>
+      <div class="line">
+        <span>Reporter</span><select class="member" name="reporter"></select>
+      </div>
+      <input type="submit" value="Generate" onclick="generate_EndShip10PM_Message(event)" />
+    </form>
+  </div>
+
+  <div class="frmHolder">
+    <h4>Closing Report</h4>
+    <form id="frmClosingReport">
+      <div class="line">
+        <span>Date</span><input type="date" name="date" />
+      </div>
+      <div class="line">
+        <span>time</span> <input type="time" name="timePicker" />
+      </div>
+      <div class="line">
+        <span>Reporter</span><select class="member" name="reporter"></select>
+      </div>
+      <input type="submit" value="Generate" onclick="generate_Closing_Message(event)" />
+    </form>
+  </div>
+
+  <div class="frmHolder">
+    <h4>Member positions report</h4>
+    <form id="frmMemberPos">
+      <div class="line">
+        <span>Date</span><input type="date" name="date" />
+      </div>
+      <div class="line">
+        <span>Ship </span>
+        <select name="moments">
+          <option value="sáng">Sáng</option>
+          <option value="tối">Tối</option>
+        </select>
+      </div>
+      <div class="line">
+        <span>Entrance 1</span>
+        <select class="member" name="entrance1"></select><select class="role role1" name="role1">
+          <option value="Cửa 1">Cửa 1</option>
+          <option value="Cửa 1, ca trưởng">Cửa 1, ca trưởng</option>
+        </select>
+      </div>
+      <div class="line">
+        <span>Entrance 2</span>
+        <select class="member" name="entrance2"></select><select class="role role2" name="role2">
+          <option value="Cửa 2">Cửa 2</option>
+          <option value="Cửa 2, trưởng ca ">Cửa 2, trưởng ca</option>
+        </select>
+      </div>
+      <div class="line">
+        <span>Entrance 3</span>
+        <select class="member" name="entrance3"></select><select class="role role3" name="role3">
+          <option value="Cửa 3">Cửa 3</option>
+          <option value="Cửa 3, ca trưởng">Cửa 3, ca trưởng</option>
+        </select>
+      </div>
+      <div class="line">
+        <span>Patrol</span>
+        <select class="member" name="patrol"></select><select class="role roleP" name="roleP">
+          <option value="Tuần tra">Tuần tra</option>
+          <option value="Tuần tra, ca trưởng">Tuần tra, ca trưởng</option>
+        </select>
+      </div>
+
+      <input type="submit" value="Generate" onclick="generate_pos_report(event)" />
+    </form>
+  </div>
+  <div class="frmHolder">
+    <h4>Member quantity report</h4>
+    <form id="frmMemberQuantity">
+      <div class="line">
+        <span>Date</span><input type="date" name="date" />
+      </div>
+      <div class="line">
+        <span>Quantity</span>
+        <input type="number" name="memberQuantity" value="1" />
+      </div>
+      <div class="line">
+        <span>Total</span> <input type="number" name="total" value="1" />
+      </div>
+      <div class="line">
+        <span>time</span>
+        <input type="time" name="timePicker" pattern="[0-9]{2}h[0-9]{2}" />
+      </div>
+      <div class="line">
+        <span>Reporter</span>
+        <select class="member" name="member"></select>
+      </div>
+
+      <input type="submit" value="Generate" onclick="generate_Squad_Quantity(event)" />
+    </form>
+  </div>
+  <div class="frmHolder">
+    <h4>Thang Loi Member checkin report</h4>
+    <form id="frmThangLoiMemberCheckinReport">
+      <div class="line">
+        <span>Date </span>
         <input type="date" name="date" />
+      </div>
 
-        <input
-          type="submit"
-          value="Generate"
-          onclick="generate_CentralRetail_Shipcard(event)"
-        />
-      </form>
-    </div>
+      <input type="submit" value="Generate" onclick="generate_ThangLoi_ShipCard(event)" />
+    </form>
+  </div>
 
-    <div class="frmHolder">
-      <h4>Nha Sach Ship check in report</h4>
-      <form id="frmNhaSachShipCheckInReport">
-        <div class="line">
-          <span>Date</span>
-          <input type="date" name="date" />
-        </div>
-        <input
-          type="submit"
-          value="Generate"
-          onclick="generate_NhaSach_ShipCard(event)"
-        />
-      </form>
-    </div>
+  <div class="frmHolder">
+    <h4>Central Retail Member checkins report</h4>
+    <form id="frmCentralRetailMemberReport">
+      <input type="date" name="date" />
 
-    <div class="frmHolder forceVisible">
-      <h4>Message Ouput</h4>
-      <form id="frmMessageOutput">
-        <textarea id="messageOutPut"></textarea>
-        <div class="line">
-          <button type="button" onclick="doCopytoClipboard()">Copy</button>
-        </div>
-      </form>
-    </div>
-    <script>
-      let selectedWizard = "";
-      let members = [
-        { name: "Lê Quang Dũng", number: "0386046481" },
-        { name: "Nguyễn Hằng Nga", number: "0941917121" },
-        { name: "Nguyễn Văn Ánh", number: "0377129148" },
-        { name: "Nghiên Giang Hải", number: "0924887454" },
-        { name: "Tạ Quang Lợi", number: "0393868148" },
-        { name: "Nguyễn Thị Thanh Hiền", number: "0325912259" },
-        { name: "Quàng Văn Quý", number: "0964848961" },
-        { name: "Đỗ Thái Hà", number: "0828291468" },
-      ];
+      <input type="submit" value="Generate" onclick="generate_CentralRetail_Shipcard(event)" />
+    </form>
+  </div>
 
-      // const datePicker = document.getElementById("datePicker");
-      // datePicker.valueAsDate = new Date();
+  <div class="frmHolder">
+    <h4>Nha Sach Ship check in report</h4>
+    <form id="frmNhaSachShipCheckInReport">
+      <div class="line">
+        <span>Date</span>
+        <input type="date" name="date" />
+      </div>
+      <input type="submit" value="Generate" onclick="generate_NhaSach_ShipCard(event)" />
+    </form>
+  </div>
 
-      function initDatePickers() {
-        Array.from(document.querySelectorAll("input[type=date]")).forEach(
-          (input) => {
-            input.valueAsDate = new Date();
-          }
-        );
-      }
+  <div class="frmHolder forceVisible">
+    <h4>Message Ouput</h4>
+    <form id="frmMessageOutput">
+      <textarea id="messageOutPut"></textarea>
+      <div class="line">
+        <button type="button" onclick="doCopytoClipboard()">Copy</button>
+      </div>
+    </form>
+  </div>
+  <script>
+    let selectedWizard = "";
+    let members = [
+      { name: "Lê Quang Dũng", number: "0386046481" },
+      { name: "Nguyễn Hằng Nga", number: "0941917121" },
+      { name: "Nguyễn Văn Ánh", number: "0377129148" },
+      { name: "Nghiên Giang Hải", number: "0924887454" },
+      { name: "Tạ Quang Lợi", number: "0393868148" },
+      { name: "Nguyễn Thị Thanh Hiền", number: "0325912259" },
+      { name: "Quàng Văn Quý", number: "0964848961" },
+      { name: "Đỗ Thái Hà", number: "0828291468" },
+    ];
 
-      initDatePickers();
+    // const datePicker = document.getElementById("datePicker");
+    // datePicker.valueAsDate = new Date();
 
-      const output = document.getElementById("messageOutPut");
-      function populateMemberSelects() {
-        let collection = document.querySelectorAll(".member");
-        Array.from(collection).forEach((select) => {
-          members.forEach((v, i, a) => {
-            let option = document.createElement("option");
-            option.innerText = v.name;
-            option.value = i;
-            select.appendChild(option);
-          });
-        });
-      }
-
-      function navBarInitiation() {
-        let navBar = document.querySelector("#navBar");
-        Array.from(document.querySelectorAll(".frmHolder")).forEach((div) => {
-          let a = document.createElement("a");
-          a.innerText = div.querySelector("h4").innerText;
-          a.data = "#" + div.querySelector("form").id;
-          a.onclick = function (event) {
-            event.preventDefault();
-            selectedWizard = event.target.data.slice(1);
-
-            Array.from(document.querySelectorAll(".frmHolder")).forEach(
-              (div) => {
-                div.classList.remove("visible");
-              }
-            );
-            
-            document.getElementById(selectedWizard).parentElement.classList.add("visible");
-          };
-          navBar.appendChild(a);
-        });
-      }
-
-      function generate_ThangLoi_ShipCard(e) {
-        e.preventDefault();
-        let date = new Date(frmThangLoiMemberCheckinReport.date.value);
-        let strDateMonth = `${date.getDate()}/${date.getMonth() + 1}`;
-        output.value = `Bảng chấm công ngày ${strDateMonth}`;
-        doCopytoClipboard();
-      }
-
-      function generate_NhaSach_ShipCard(e) {
-        e.preventDefault();
-        let date = new Date(frmNhaSachShipCheckInReport.date.value);
-        let strDateMonth = `${date.getDate()}/${date.getMonth() + 1}`;
-        output.value = `Bảng chấm công đội Nhà Sạch ngày ${strDateMonth}`;
-
-        doCopytoClipboard();
-      }
-
-      function generate_CentralRetail_Shipcard(e) {
-        e.preventDefault();
-        let date = new Date(frmCentralRetailMemberReport.date.value);
-        let strDateMonth = `${date.getDate()}/${date.getMonth() + 1}`;
-        output.value = `Em gửi anh bảng chấm công ngày ${strDateMonth}`;
-
-        doCopytoClipboard();
-      }
-
-      function generate_Squad_Quantity(event) {
-        event.preventDefault();
-        let date = new Date(frmMemberQuantity.date.value);
-        let strDateMonth = `${date.getDate()}/${date.getMonth() + 1}`;
-
-        let form = document.getElementById("frmMemberQuantity");
-
-        let employeeName = members[Number.parseInt(form.member.value)].name;
-        let total = form.total.value;
-        let quantity = form.memberQuantity.value;
-        let time = form.timePicker.value;
-        if (time) {
-          time = time.replace(":", "h");
-        } else {
-          let moment = new Date();
-          time = `${moment.getHours()}h${moment.getMinutes()}`;
+    function initDatePickers() {
+      Array.from(document.querySelectorAll("input[type=date]")).forEach(
+        (input) => {
+          input.valueAsDate = new Date();
         }
+      );
+    }
 
-        output.value = `Báo Cáo Ban Quản Lý
+    initDatePickers();
+
+    const output = document.getElementById("messageOutPut");
+    function populateMemberSelects() {
+      let collection = document.querySelectorAll(".member");
+      Array.from(collection).forEach((select) => {
+        select.appendChild(document.createElement("option"))
+        members.forEach((v, i, a) => {
+          let option = document.createElement("option");
+          option.innerText = v.name;
+          option.value = i;
+          select.appendChild(option);
+        });
+      });
+    }
+
+    function navBarInitiation() {
+      let navBar = document.querySelector("#navBar");
+      Array.from(document.querySelectorAll(".frmHolder")).forEach((div) => {
+        let a = document.createElement("a");
+        a.innerText = div.querySelector("h4").innerText;
+        a.data = "#" + div.querySelector("form").id;
+        a.onclick = function (event) {
+          event.preventDefault();
+          selectedWizard = event.target.data.slice(1);
+
+          Array.from(document.querySelectorAll(".frmHolder")).forEach(
+            (div) => {
+              div.classList.remove("visible");
+            }
+          );
+
+          document.getElementById(selectedWizard).parentElement.classList.add("visible");
+        };
+        navBar.appendChild(a);
+      });
+    }
+
+    function generate_EndShip10PM_Message(e) {
+      e.preventDefault();
+      let form = document.getElementById("frmEndShipAt10PM");
+      let date = new Date(form.date.value);
+      let strDateMonth = `${date.getDate()}/${date.getMonth() + 1}`;
+      let quantity = form.memberQuantity.value;
+      let time = form.timePicker.value;
+      if (time) {
+        time = time.replace(":", "h");
+      } else {
+        let moment = new Date();
+        time = `${moment.getHours()}h${moment.getMinutes()}`;
+      }
+      let employeeName = members[Number.parseInt(form.reporter.value)].name;
+
+      output.value = `Báo Cáo Ban Quản Lý
+-tình hình ca ngày ${strDateMonth}
+-Lúc: ${time}
+-Mục Tiêu: TTTM Lotte mall tây hồ - Hà Nội
+- Hết ca ${quantity} vị trí lúc 22h
+- Nhân viên báo cáo ${employeeName}
+-Tình hình ANTT-PCCC
+-Bảo Đảm An Toàn
+-Báo Cáo Mr.Dũng hết`;
+
+      doCopytoClipboard();
+    }
+
+    function generate_ThangLoi_ShipCard(e) {
+      e.preventDefault();
+      let date = new Date(frmThangLoiMemberCheckinReport.date.value);
+      let strDateMonth = `${date.getDate()}/${date.getMonth() + 1}`;
+      output.value = `Bảng chấm công ngày ${strDateMonth}`;
+      doCopytoClipboard();
+    }
+
+    function generate_NhaSach_ShipCard(e) {
+      e.preventDefault();
+      let date = new Date(frmNhaSachShipCheckInReport.date.value);
+      let strDateMonth = `${date.getDate()}/${date.getMonth() + 1}`;
+      output.value = `Bảng chấm công đội Nhà Sạch ngày ${strDateMonth}`;
+
+      doCopytoClipboard();
+    }
+
+    function generate_CentralRetail_Shipcard(e) {
+      e.preventDefault();
+      let date = new Date(frmCentralRetailMemberReport.date.value);
+      let strDateMonth = `${date.getDate()}/${date.getMonth() + 1}`;
+      output.value = `Em gửi anh bảng chấm công ngày ${strDateMonth}`;
+
+      doCopytoClipboard();
+    }
+
+    function generate_Squad_Quantity(event) {
+      event.preventDefault();
+      let date = new Date(frmMemberQuantity.date.value);
+      let strDateMonth = `${date.getDate()}/${date.getMonth() + 1}`;
+
+      let form = document.getElementById("frmMemberQuantity");
+
+      let employeeName = members[Number.parseInt(form.member.value)].name;
+      let total = form.total.value;
+      let quantity = form.memberQuantity.value;
+      let time = form.timePicker.value;
+      if (time) {
+        time = time.replace(":", "h");
+      } else {
+        let moment = new Date();
+        time = `${moment.getHours()}h${moment.getMinutes()}`;
+      }
+
+      output.value = `Báo Cáo Ban Quản Lý
 -tình hình ca ngày ${strDateMonth}
 -Lúc: ${time}
 -Mục Tiêu: TTTM Lotte mall tây hồ - Hà Nội
@@ -334,61 +388,57 @@
 -Bảo Đảm An Toàn
 -Báo Cáo Mr.Dũng hết`;
 
-        doCopytoClipboard();
-      }
-      function generate_Closing_Message(event) {
-        event.preventDefault();
-        let form = document.getElementById("frmClosingReport");
-        let date = new Date(form.date.value);
-        let strDateMonth = `${date.getDate()}/${date.getMonth() + 1}`;
+      doCopytoClipboard();
+    }
+    function generate_Closing_Message(event) {
+      event.preventDefault();
+      let form = document.getElementById("frmClosingReport");
+      let date = new Date(form.date.value);
+      let strDateMonth = `${date.getDate()}/${date.getMonth() + 1}`;
 
-        let employeeName = members[Number.parseInt(form.reporter.value)].name;
-        let time = form.timePicker.value;
-        if (time) {
-          time = time.replace(":", "h");
-        } else {
-          let moment = new Date();
-          time = `${moment.getHours()}h${moment.getMinutes()}`;
-        }
-
-        output.value = `Báo cáo ca trực cuối ngày ${strDateMonth} \nNV : ${employeeName}\nBV kết thúc ca trực lúc ${time}`;
-        doCopytoClipboard();
+      let employeeName = members[Number.parseInt(form.reporter.value)].name;
+      let time = form.timePicker.value;
+      if (time) {
+        time = time.replace(":", "h");
+      } else {
+        let moment = new Date();
+        time = `${moment.getHours()}h${moment.getMinutes()}`;
       }
 
-      function doCopytoClipboard() {
-        output.select();
-        document.execCommand("copy");
-        output.focus();
-      }
+      output.value = `Báo cáo ca trực cuối ngày ${strDateMonth} \nNV : ${employeeName}\nBV kết thúc ca trực lúc ${time}`;
+      doCopytoClipboard();
+    }
 
-      function generate_pos_report(e) {
-        e.preventDefault();
-        let date = new Date(frmMemberPos.date.value);
-        let strDateMonth = `${date.getDate()}/${date.getMonth() + 1}`;
+    function doCopytoClipboard() {
+      output.select();
+      document.execCommand("copy");
+      output.scrollIntoView();
+    }
 
-        let form = document.getElementById("frmMemberPos");
+    function generate_pos_report(e) {
+      e.preventDefault();
+      let date = new Date(frmMemberPos.date.value);
+      let strDateMonth = `${date.getDate()}/${date.getMonth() + 1}`;
 
-        output.value = `Báo cáo tình hình nhân sự ${
-          form.moments.value
+      let form = document.getElementById("frmMemberPos");
+
+      output.value = `Báo cáo tình hình nhân sự ${form.moments.value
         } ${strDateMonth}
 
-${members[form.entrance1.value].name} (cửa 1) ${
-          members[form.entrance1.value].number
+${members[form.entrance1.value].name} (${form.role1.value}) ${members[form.entrance1.value].number
         }
-${members[form.entrance2.value].name} (cửa 2) ${
-          members[form.entrance2.value].number
+${members[form.entrance2.value].name} (${form.role2.value}) ${members[form.entrance2.value].number
         }
-${members[form.entrance3.value].name} (cửa 3) ${
-          members[form.entrance3.value].number
+${members[form.entrance3.value].name} (${form.role3.value}) ${members[form.entrance3.value].number
         }
-${members[form.patrol.value].name} (tuần tra) ${
-          members[form.patrol.value].number
+${members[form.patrol.value].name} (${form.roleP.value}) ${members[form.patrol.value].number
         }`;
-        doCopytoClipboard();
-      }
+      doCopytoClipboard();
+    }
 
-      navBarInitiation();
-      populateMemberSelects();
-    </script>
-  </body>
+    navBarInitiation();
+    populateMemberSelects();
+  </script>
+</body>
+
 </html>
