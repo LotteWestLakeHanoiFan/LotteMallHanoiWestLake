@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+        
+        <script>
+            let hanoi = {
+                x: 21.0278,
+                y: 105.8342
+            };
+            let saigon = {
+                x: 10.8231,
+                y: 106.6297
+            }
+            let pointsDistance = (point1, point2)=>{
+                return Math.sqrt(Math.pow(point1.x-point2.x,2) + Math.pow(point1.y - point2.y,2));
+            }
+            
+            let theoryCoordinatesDistance = (p1,p2)=>{
+                return pointsDistance(p1,p2) * 111.139;
+            }
+
+            console.log(theoryCoordinatesDistance(pointsDistance(hanoi, saigon)))
+        </script>
+    </body>
+</html>

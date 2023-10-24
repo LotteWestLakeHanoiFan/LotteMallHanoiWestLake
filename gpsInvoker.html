@@ -131,7 +131,7 @@
                 
                 ` + output.innerHTML;
             }
-            let trackLoop = setInterval(
+            let trackLoop = ()=>setTimeout(
                         () => navigator.geolocation.getCurrentPosition(
                             (pos)=>{
                                 stack[i]={
@@ -143,8 +143,10 @@
                                 showTrackResult(pos);
                                 attempt(i)
                                 i++;
+                                if (i<=max){
+                                    trackLoop();
+                                }
                                 if (i> max){
-                                    clearInterval(trackLoop)
                                     let sum = {
                                         altitude: 0,
                                         longitude: 0,
@@ -168,6 +170,7 @@
                             }, 
                             showInvokeError, { enableHighAccuracy: true }), delayBetweenInvoking
                     );
+            trackLoop();
         }
 
         function showInvokeError(err) {
