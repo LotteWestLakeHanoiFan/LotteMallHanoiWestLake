@@ -41,8 +41,8 @@
                 let output = document.getElementById("ouput");
                 let transaction = await db.transaction("members","readonly")
                 let members = await transaction.objectStore("members")
-                let getAllRequest = await members.getAll();
-                getAllRequest.result.forEach(member=>{
+                
+                members.getAll().success = (event)=>event.target.result.forEach(member=>{
                     output.innerHTML += `${member.id} - ${member.name} - ${member.phoneNumber} - ${member.memberSince} <br>`
                 })
             };
