@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        Members DB Reader
+    </title>
+    <script src="scripts/members_db_version_reader.js"></script>
+</head>
+
+<body>
+    <h3>Members DB Reader</h3>
+    <p>This page shows all members in my team</p>
+    <div id="output">
+
+    </div>
+    <script>
+        const DB_META = {};
+        function set_DB_META(meta){
+            DB_META.name = "MEMBERS_DB";
+            DB_META.version = meta.latestVersionp;
+        }
+    
+        (async function(){
+            await get_latest_db_version(set_DB_META);
+            let openMemberDBRequest = indexedDB.open(DB_META.name, DB_META.version);
+        openMemberDBRequest.onupgradeneeded = function (event) {
+            let db = openMemberDBRequest.result;
+            switch (event.oldVersion) {
+                case 0:
+                // version 0 means the client had no database
+
+                case 1:
+                // client had version 1
+            }
+        };
+
+        openMemberDBRequest.onerror = function () {
+            console.error("Error", openMemberDBRequest.error);
+        };
+
+        openMemberDBRequest.onsuccess = function () {
+            let db = openMemberDBRequest.result;
+        };
+
+        })()
+
+        
+
+        
+        // delete DB
+        // let deleteRequest = indexedDB.deleteDatabase(DB_NAME);
+
+        // We can't open a database using an older open call version
+        // if the current user database has a higher version than in the open cancelIdleCallback, e.g. the existing DB version is 3, and we try to open(...2), then that's an error, openRequest.onerror triggers.
+        // That's rare, but such a thing may happen when a visitor loads outdated JavaScript code, e.g. from a proxy cache. So the code is old, but his database is new.
+        // To protect from errors, we should check db.version and suggest a page XMLHttpRequestUpload. use proper HTTP caching headers to avoid loading th eold ConvolverNode, so that you'll never have such problems.
+    </script>
+</body>
+
+</html>
