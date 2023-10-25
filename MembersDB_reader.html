@@ -40,7 +40,9 @@
                 let db = openMemberDBRequest.result;
                 let output = document.getElementById("ouput");
                 let members = db.transaction("members","readonly").objectStore("members").getAll();
-                console.log(members);
+                members.result.forEach(member=>{
+                    output.innerHTML += `${member.id} - ${member.name} - ${member.phoneNumber} - ${member.memberSince} <br>`
+                })
             };
 
         })()
