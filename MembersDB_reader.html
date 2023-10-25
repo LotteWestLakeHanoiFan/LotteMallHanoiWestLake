@@ -36,10 +36,10 @@
                 console.error("Error", openMemberDBRequest.error);
             };
 
-            openMemberDBRequest.onsuccess = function () {
+            openMemberDBRequest.onsuccess = async function () {
                 let db = openMemberDBRequest.result;
                 let output = document.getElementById("ouput");
-                let members = db.transaction("members","readonly").objectStore("members").getAll();
+                let members = await db.transaction("members","readonly").objectStore("members").getAll();
                 members.result.forEach(member=>{
                     output.innerHTML += `${member.id} - ${member.name} - ${member.phoneNumber} - ${member.memberSince} <br>`
                 })
