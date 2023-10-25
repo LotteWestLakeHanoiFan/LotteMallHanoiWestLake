@@ -38,7 +38,7 @@
 
             openMemberDBRequest.onsuccess = function () {
                 let db = openMemberDBRequest.result;
-                let output = document.getElementById("ouput");
+                let output = document.getElementById("output");
                 let transaction = db.transaction("members","readonly")
                 let members = transaction.objectStore("members")
 
