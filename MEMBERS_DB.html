@@ -15,7 +15,7 @@
   <p>Once the installation is complete you gonna be redirected to MembersDB_reader page</p>
   <script>
 
-    (function () {
+    (async function () {
       let openMemberDBRequest = indexedDB.open(DB_META.name, DB_META.version);
       openMemberDBRequest.onupgradeneeded = function (event) {
         let db = openMemberDBRequest.result;
