@@ -5,6 +5,7 @@
     <title>
         Members DB Reader
     </title>
+    <script src="scripts/common_member_db_meta.js"></script>
     <script src="scripts/members_db_version_reader.js"></script>
 </head>
 
@@ -15,12 +16,6 @@
 
     </div>
     <script>
-        const DB_META = {};
-        function set_DB_META(meta){
-            DB_META.name = "MEMBERS_DB";
-            DB_META.version = meta.latestVersionp;
-        }
-    
         (async function(){
             await get_latest_db_version(set_DB_META);
             let openMemberDBRequest = indexedDB.open(DB_META.name, DB_META.version);
