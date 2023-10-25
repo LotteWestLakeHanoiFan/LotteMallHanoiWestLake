@@ -1,43 +1,94 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>
-      Members DB Initiator
-    </title>
-  </head>
-  <body>
-    
 
-    <script>
-      const DB_NAME = "MEMBERS_DB";
-      const DB_VERSION = 1;
-      let openMemberDBRequest = indexedDB.open(DB_NAME, DB_VERSION);
-      openMemberDBRequest.onupgradeneeded = function (event) {
-        let db = openMemberDBRequest.result;
-        switch (event.oldVersion) {
-          case 0:
-          // version 0 means the client had no database
+<head>
+  <title>
+    Members DB Initiator
+  </title>
+  <script src="scripts/common_member_db_meta.js"></script>
+  <script src="scripts/members_db_version_reader.js"></script>
+</head>
 
-          case 1:
-          // client had version 1
+<body>
+  <H3>Hello you are seeing DB initiator </H3>
+  <p>Your application database is being updated please wait.</p>
+  <p>Once the installation is complete you gonna be redirected to MembersDB_reader page</p>
+  <script>
+
+    let openMemberDBRequest = indexedDB.open(DB_META.name, DB_META.version);
+    openMemberDBRequest.onupgradeneeded = function (event) {
+      let db = openMemberDBRequest.result;
+      switch (event.oldVersion) {
+        case 0:
+          initiateDB(db);
+        case 1:
+          initVersion1_DB(db);
+        // client had version 1
+      }
+      alert("DB installation is completed. You are now being redirected to Members Reader page");
+      redirectToMembersDB_reader();
+    };
+
+    openMemberDBRequest.onerror = function () {
+      alert(`Error has occurred: ${openMemberDBRequest.error}`);
+      console.log(openMemberDBRequest.error)
+    };
+
+    openMemberDBRequest.onsuccess = function () {
+      alert("DB installation is completed. You are now being redirected")
+      redirectToMembersDB_reader();
+    }
+
+    function initVersion1_DB(dbInstance) {
+      let tsion = dbInstance.transaction("members", "readwrite");
+      let store = tsion.objectStore("members");
+      let currentMems = [
+        { name: "Lê Quang Dũng", number: "0386046481" },
+        { name: "Nguyễn Hằng Nga", number: "0941917121" },
+        { name: "Nguyễn Văn Ánh", number: "0377129148" },
+        { name: "Nghiên Giang Hải", number: "0924887454" },
+        { name: "Tạ Quang Lợi", number: "0393868148" },
+        { name: "Nguyễn Thị Thanh Hiền", number: "0325912259" },
+        { name: "Quàng Văn Quý", number: "0964848961" },
+        { name: "Đỗ Thái Hà", number: "0828291468" },
+      ];
+      currentMems.forEach((item,index,arr)=>{
+        let request = store.add({
+          id: index,
+          name: item.name,
+          phoneNumber: item.number,
+          memberSince: new Date()
+        });
+        request.onsuccess = ()=>{
+          console.log(`member ${item.name} is added to the store`, request.result)
         }
-      };
+        request.onerror = ()=>{
+          console.error(request.error)
+        }
+      })
+    }
 
-      openMemberDBRequest.onerror = function () {
-        console.error("Error", openMemberDBRequest.error);
-      };
+    function initiateDB(dbInstance) {
+      dbInstance.createObjectStore("members", { keyPath: 'id' });
+      /* members Schema
+       {
+        id:0, // number
+        name: "abcd", // string
+        phoneNumber: "5550123", // string
+        memberSince: Date
+      } */
 
-      openMemberDBRequest.onsuccess = function () {
-        let db = openMemberDBRequest.result;
-      };
+    }
 
-      // delete DB
-      // let deleteRequest = indexedDB.deleteDatabase(DB_NAME);
 
-      // We can't open a database using an older open call version
-      // if the current user database has a higher version than in the open cancelIdleCallback, e.g. the existing DB version is 3, and we try to open(...2), then that's an error, openRequest.onerror triggers.
-      // That's rare, but such a thing may happen when a visitor loads outdated JavaScript code, e.g. from a proxy cache. So the code is old, but his database is new.
-      // To protect from errors, we should check db.version and suggest a page XMLHttpRequestUpload. use proper HTTP caching headers to avoid loading th eold ConvolverNode, so that you'll never have such problems.
-    </script>
-  </body>
+    // delete DB
+    // let deleteRequest = indexedDB.deleteDatabase(DB_NAME);
+
+    // We can't open a database using an older open call version
+    // if the current user database has a higher version than in the open cancelIdleCallback, e.g. the existing DB version is 3, and we try to open(...2), then that's an error, openRequest.onerror triggers.
+    // That's rare, but such a thing may happen when a visitor loads outdated JavaScript code, e.g. from a proxy cache. So the code is old, but his database is new.
+    // To protect from errors, we should check db.version and suggest a page XMLHttpRequestUpload. use proper HTTP caching headers to avoid loading th eold ConvolverNode, so that you'll never have such problems.
+  </script>
+</body>
+
 </html>

@@ -16,33 +16,37 @@
 
     </div>
     <script>
-        (async function(){
+        (async function () {
             await get_latest_db_version(set_DB_META);
             let openMemberDBRequest = indexedDB.open(DB_META.name, DB_META.version);
-        openMemberDBRequest.onupgradeneeded = function (event) {
-            let db = openMemberDBRequest.result;
-            switch (event.oldVersion) {
-                case 0:
-                // version 0 means the client had no database
+            openMemberDBRequest.onupgradeneeded = function (event) {
+                let db = openMemberDBRequest.result;
+                switch (event.oldVersion) {
+                    case 0:
+                    // version 0 means the client had no database
+                    alert("You are now being redirected to DB installation page");
+                    redirectToMembers_DB();
 
-                case 1:
-                // client had version 1
-            }
-        };
+                    case 1:
+                    // client had version 1
+                }
+            };
 
-        openMemberDBRequest.onerror = function () {
-            console.error("Error", openMemberDBRequest.error);
-        };
+            openMemberDBRequest.onerror = function () {
+                console.error("Error", openMemberDBRequest.error);
+            };
 
-        openMemberDBRequest.onsuccess = function () {
-            let db = openMemberDBRequest.result;
-        };
+            openMemberDBRequest.onsuccess = function () {
+                let db = openMemberDBRequest.result;
+            };
 
         })()
 
-        
+        function redirectToMembersDB_reader() {
+            location.href = "MembersDB_reader.html";
+        }
 
-        
+
         // delete DB
         // let deleteRequest = indexedDB.deleteDatabase(DB_NAME);
 
