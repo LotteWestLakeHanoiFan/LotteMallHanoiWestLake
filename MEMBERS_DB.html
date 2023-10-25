@@ -22,11 +22,9 @@
         case 0:
           initiateDB(db);
         case 1:
-          initVersion1_DB(db);
+          setTimeout(()=>fetchVersion1_DB_Data(db),200);
         // client had version 1
       }
-      alert("DB installation is completed. You are now being redirected to Members Reader page");
-      redirectToMembersDB_reader();
     };
 
     openMemberDBRequest.onerror = function () {
@@ -39,7 +37,12 @@
       redirectToMembersDB_reader();
     }
 
-    function initVersion1_DB(dbInstance) {
+    function on_dbInstallationComplete(){
+      alert("DB installation is completed. You are now being redirected to Members Reader page");
+      redirectToMembersDB_reader();
+    }
+
+    function fetchVersion1_DB_Data(dbInstance) {
       let tsion = dbInstance.transaction("members", "readwrite");
       let store = tsion.objectStore("members");
       let currentMems = [
@@ -66,6 +69,8 @@
           console.error(request.error)
         }
       })
+
+      on_dbInstallationComplete();
     }
 
     function initiateDB(dbInstance) {
