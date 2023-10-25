@@ -12,3 +12,5 @@ function redirectToMembersDB_reader() {
 function redirectToMembers_DB(){
     location.href="MEMBERS_DB.html";
 }
+
+set_DB_META(DB_META)
