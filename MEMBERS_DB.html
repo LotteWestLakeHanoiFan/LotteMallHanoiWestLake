@@ -15,28 +15,30 @@
   <p>Once the installation is complete you gonna be redirected to MembersDB_reader page</p>
   <script>
 
-    let openMemberDBRequest = indexedDB.open(DB_META.name, DB_META.version);
-    openMemberDBRequest.onupgradeneeded = function (event) {
-      let db = openMemberDBRequest.result;
-      switch (event.oldVersion) {
-        case 0:
-          initiateDB(db);
-        case 1:
-          setTimeout(()=>fetchVersion1_DB_Data(db),200);
-        // client had version 1
+    (function () {
+      let openMemberDBRequest = indexedDB.open(DB_META.name, DB_META.version);
+      openMemberDBRequest.onupgradeneeded = function (event) {
+        let db = openMemberDBRequest.result;
+        switch (event.oldVersion) {
+          case 0:
+            initiateDB(db);
+          case 1:
+            setTimeout(() => fetchVersion1_DB_Data(db), 200);
+          // client had version 1
+        }
+      };
+
+      openMemberDBRequest.onerror = function () {
+        alert(`Error has occurred: ${openMemberDBRequest.error}`);
+        console.log(openMemberDBRequest.error)
+      };
+
+      openMemberDBRequest.onsuccess = function () {
+
       }
-    };
+    })()
 
-    openMemberDBRequest.onerror = function () {
-      alert(`Error has occurred: ${openMemberDBRequest.error}`);
-      console.log(openMemberDBRequest.error)
-    };
-
-    openMemberDBRequest.onsuccess = function () {
-      
-    }
-
-    function on_dbInstallationComplete(){
+    function on_dbInstallationComplete() {
       alert("DB installation is completed. You are now being redirected to Members Reader page");
       redirectToMembersDB_reader();
     }
@@ -54,17 +56,17 @@
         { name: "Quàng Văn Quý", number: "0964848961" },
         { name: "Đỗ Thái Hà", number: "0828291468" },
       ];
-      currentMems.forEach((item,index,arr)=>{
+      currentMems.forEach((item, index, arr) => {
         let request = store.add({
           id: index,
           name: item.name,
           phoneNumber: item.number,
           memberSince: new Date()
         });
-        request.onsuccess = ()=>{
+        request.onsuccess = () => {
           console.log(`member ${item.name} is added to the store`, request.result)
         }
-        request.onerror = ()=>{
+        request.onerror = () => {
           console.error(request.error)
         }
       })
