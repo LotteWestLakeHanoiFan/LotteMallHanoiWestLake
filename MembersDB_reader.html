@@ -38,6 +38,9 @@
 
             openMemberDBRequest.onsuccess = function () {
                 let db = openMemberDBRequest.result;
+                let output = document.getElementById("ouput");
+                let members = db.transaction("members","readonly").objectStore("members").getAll();
+                console.log(members);
             };
 
         })()
