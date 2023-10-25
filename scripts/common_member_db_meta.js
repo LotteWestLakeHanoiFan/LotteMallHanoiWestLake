@@ -13,4 +13,5 @@ function redirectToMembers_DB(){
     location.href="MEMBERS_DB.html";
 }
 
-set_DB_META(DB_META)
+
+get_latest_db_version(set_DB_META)
