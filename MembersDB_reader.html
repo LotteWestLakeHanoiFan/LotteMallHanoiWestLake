@@ -36,13 +36,13 @@
                 console.error("Error", openMemberDBRequest.error);
             };
 
-            openMemberDBRequest.onsuccess = async function () {
+            openMemberDBRequest.onsuccess = function () {
                 let db = openMemberDBRequest.result;
                 let output = document.getElementById("ouput");
-                let transaction = await db.transaction("members","readonly")
-                let members = await transaction.objectStore("members")
-                
-                members.getAll().success = (event)=>event.target.result.forEach(member=>{
+                let transaction = db.transaction("members","readonly")
+                let members = transaction.objectStore("members")
+
+                members.getAll().onsuccess = (event)=>event.target.result.forEach(member=>{
                     output.innerHTML += `${member.id} - ${member.name} - ${member.phoneNumber} - ${member.memberSince} <br>`
                 })
             };
