@@ -18,13 +18,14 @@
 
       await get_latest_db_version(set_DB_META)
       let openMemberDBRequest = indexedDB.open(DB_META.name, DB_META.version);
-      openMemberDBRequest.onupgradeneeded = function (event) {
+      openMemberDBRequest.onupgradeneeded =async function (event) {
         let db = openMemberDBRequest.result;
         switch (event.oldVersion) {
           case 0:
-            initiateDB(db);
+            await initiateDB(db);
           case 1:
-            setTimeout(() => fetchVersion1_DB_Data(db), 200);
+            // setTimeout(() => fetchVersion1_DB_Data(db), 200);
+            fetchVersion1_DB_Data(db)
           // client had version 1
         }
       };
@@ -75,8 +76,8 @@
       on_dbInstallationComplete();
     }
 
-    function initiateDB(dbInstance) {
-      dbInstance.createObjectStore("members", { keyPath: 'id' });
+    async function initiateDB(dbInstance) {
+      return await dbInstance.createObjectStore("members", { keyPath: 'id' });
       /* members Schema
        {
         id:0, // number
