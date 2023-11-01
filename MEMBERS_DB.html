@@ -5,7 +5,6 @@
   <title>
     Members DB Initiator
   </title>
-  <script src="scripts/members_db_version_reader.js"></script>
   <script src="scripts/common_member_db_meta.js"></script>
 </head>
 
@@ -16,6 +15,8 @@
   <script>
 
     (async function () {
+
+      await get_latest_db_version(set_DB_META)
       let openMemberDBRequest = indexedDB.open(DB_META.name, DB_META.version);
       openMemberDBRequest.onupgradeneeded = function (event) {
         let db = openMemberDBRequest.result;
@@ -52,7 +53,7 @@
         { name: "Nguyễn Văn Ánh", number: "0377129148" },
         { name: "Nghiên Giang Hải", number: "0924887454" },
         { name: "Tạ Quang Lợi", number: "0393868148" },
-        { name: "Nguyễn Thị Thanh Hiền", number: "0325912259" },
+        // { name: "Nguyễn Thị Thanh Hiền", number: "0325912259" },
         { name: "Quàng Văn Quý", number: "0964848961" },
         { name: "Đỗ Thái Hà", number: "0828291468" },
       ];

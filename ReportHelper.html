@@ -77,10 +77,10 @@
       width: 100%;
       height: 280px;
       resize: vertical;
-      font-size:17px;
+      font-size: 17px;
     }
-    
-    .role{
+
+    .role {
       margin-left: 10px;
     }
 
@@ -251,7 +251,7 @@
       { name: "Nguyễn Văn Ánh", number: "0377129148" },
       { name: "Nghiên Giang Hải", number: "0924887454" },
       { name: "Tạ Quang Lợi", number: "0393868148" },
-      { name: "Nguyễn Thị Thanh Hiền", number: "0325912259" },
+      // { name: "Nguyễn Thị Thanh Hiền", number: "0325912259" },
       { name: "Quàng Văn Quý", number: "0964848961" },
       { name: "Đỗ Thái Hà", number: "0828291468" },
     ];
@@ -422,16 +422,19 @@
       let form = document.getElementById("frmMemberPos");
 
       output.value = `Báo cáo tình hình nhân sự ${form.moments.value
-        } ${strDateMonth}
-
+        } ${strDateMonth}\n`
+      output.value += `
 ${members[form.entrance1.value].name} (${form.role1.value}) ${members[form.entrance1.value].number
         }
 ${members[form.entrance2.value].name} (${form.role2.value}) ${members[form.entrance2.value].number
         }
 ${members[form.entrance3.value].name} (${form.role3.value}) ${members[form.entrance3.value].number
-        }
-${members[form.patrol.value].name} (${form.roleP.value}) ${members[form.patrol.value].number
-        }`;
+        }`
+      if (form.patrol.value !== "") {
+        output.value +=
+          `${members[form.patrol.value].name} (${form.roleP.value}) ${members[form.patrol.value].number
+          }`;
+      }
       doCopytoClipboard();
     }
 
