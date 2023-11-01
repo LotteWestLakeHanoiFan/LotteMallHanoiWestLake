@@ -25,7 +25,7 @@
             await initiateDB(db);
           case 1:
             // setTimeout(() => fetchVersion1_DB_Data(db), 200);
-            fetchVersion1_DB_Data(db)
+            fetchVersion1_DB_Data(openMemberDBRequest.transaction)
           // client had version 1
         }
       };
@@ -45,9 +45,9 @@
       redirectToMembersDB_reader();
     }
 
-    function fetchVersion1_DB_Data(dbInstance) {
-      let tsion = dbInstance.transaction("members", "readwrite");
-      let store = tsion.objectStore("members");
+    function fetchVersion1_DB_Data(transaction) {
+      // let tsion = dbInstance.transaction("members", "readwrite");
+      let store = transaction.objectStore("members");
       let currentMems = [
         { name: "Lê Quang Dũng", number: "0386046481" },
         { name: "Nguyễn Hằng Nga", number: "0941917121" },
