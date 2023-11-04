@@ -16,32 +16,49 @@
     </div>
     <script>
         (async function () {
-            await get_latest_db_version(set_DB_META);
-            let openMemberDBRequest = indexedDB.open(DB_META.name, DB_META.version);
-            openMemberDBRequest.onupgradeneeded = function (event) {
-                let db = openMemberDBRequest.result;
-                switch (event.oldVersion) {
-                    case 0:
-                    // version 0 means the client had no database
-                    alert("You are now being redirected to DB installation page");
-                    redirectToMembers_DB();
+            // await get_latest_db_version(set_DB_META);
+            let isReady = false;
 
-                    case 1:
-                    // client had version 1
-                }
-            };
+            let openMemberDBRequest = indexedDB.open(DB_META.name, DB_META.version);
+
+            // openMemberDBRequest.onupgradeneeded = function (event) {
+            //     let db = event.target.result;
+            //     switch (event.oldVersion) {
+            //         case 0:
+            //             // version 0 means the client had no database
+            //             alert("You are now being redirected to DB installation page");
+            //         case 1:
+            //         // client had version 1
+            //         default:
+            //             isReady = false;
+            //             // db.close();
+            //             // event.preventDefault();
+            //             setTimeout(() => {
+                            
+            //             }, 5000);
+            //             return;
+            //     }
+            // };
 
             openMemberDBRequest.onerror = function () {
-                console.error("Error", openMemberDBRequest.error);
+                console.error("Error", event.target.error);
             };
 
-            openMemberDBRequest.onsuccess = function () {
-                let db = openMemberDBRequest.result;
+            openMemberDBRequest.onsuccess = function (event) {
+
+                let db = event.target.result;
+                alert(event.target.result.version)
+                if (!isReady) {
+                    db.close();
+                        
+                    redirectToMembers_DB();
+                    
+                }
                 let output = document.getElementById("output");
-                let transaction = db.transaction("members","readonly")
+                let transaction = db.transaction("members", "readonly")
                 let members = transaction.objectStore("members")
 
-                members.getAll().onsuccess = (event)=>event.target.result.forEach(member=>{
+                members.getAll().onsuccess = (event) => event.target.result.forEach(member => {
                     output.innerHTML += `${member.id} - ${member.name} - ${member.phoneNumber} - ${member.memberSince} <br>`
                 })
             };

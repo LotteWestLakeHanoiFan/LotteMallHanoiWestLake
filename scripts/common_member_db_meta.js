@@ -1,9 +1,12 @@
-const DB_META = {};
+const DB_META = {
+    name : "MEMBERS_DB",
+    version : 1,
+};
 
 const membersDB_Meta_Relative_URL = "MembersDB_Meta.json"
-async function get_latest_db_version(onSuccessCallback){
+async function get_latest_db_version(onSuccessCallback) {
     let response = await fetch(membersDB_Meta_Relative_URL)
-    if (response.ok){
+    if (response.ok) {
         onSuccessCallback(await response.json());
     } else {
         alert(`HTTP-Error: ${response.status}`);
@@ -19,8 +22,12 @@ function redirectToMembersDB_reader() {
     location.href = "MembersDB_reader.html";
 }
 
-function redirectToMembers_DB(){
-    location.href="MEMBERS_DB.html";
+function redirectToMembers_DB() {
+    // location.href = "MEMBERS_DB.html";
+    let a = document.createElement("a");
+    a.href="MEMBERS_DB.html";
+    document.body.append(a);
+    a.click();
 }
 
 

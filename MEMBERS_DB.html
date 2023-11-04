@@ -16,28 +16,38 @@
 
     (async function () {
 
-      await get_latest_db_version(set_DB_META)
+      // await get_latest_db_version(set_DB_META)
       let openMemberDBRequest = indexedDB.open(DB_META.name, DB_META.version);
-      openMemberDBRequest.onupgradeneeded =async function (event) {
-        let db = openMemberDBRequest.result;
+      openMemberDBRequest.onupgradeneeded =function (event) {
+        alert("Reach onupgradeneeded")
+        let db = event.target.result;
         switch (event.oldVersion) {
           case 0:
-            await initiateDB(db);
+            initiateDB(db);
+            // fetchVersion1_DB_Data(event.target.transaction) 
+            // return;
           case 1:
             // setTimeout(() => fetchVersion1_DB_Data(db), 200);
-            fetchVersion1_DB_Data(openMemberDBRequest.transaction)
+            alert('reach case 1')
+            fetchVersion1_DB_Data(event.target.transaction)
           // client had version 1
         }
       };
 
-      openMemberDBRequest.onerror = function () {
-        alert(`Error has occurred: ${openMemberDBRequest.error}`);
-        console.log(openMemberDBRequest.error)
+      openMemberDBRequest.onerror = function (event) {
+        alert(`Error has occurred: ${event.target.error}`);
+        console.log(event.target.error)
       };
 
-      openMemberDBRequest.onsuccess = function () {
+      openMemberDBRequest.onsuccess = function (event) {
+        console.log(event.target.result.version)
+      };
 
+      openMemberDBRequest.onblocked = function (e){
+        console.log(e)
+        alert('blocked')
       }
+      
     })()
 
     function on_dbInstallationComplete() {
@@ -76,8 +86,9 @@
       on_dbInstallationComplete();
     }
 
-    async function initiateDB(dbInstance) {
-      return await dbInstance.createObjectStore("members", { keyPath: 'id' });
+    function initiateDB(dbInstance) {
+      console.log("reach initiateDB")
+      return dbInstance.createObjectStore("members", { keyPath: 'id' });
       /* members Schema
        {
         id:0, // number
