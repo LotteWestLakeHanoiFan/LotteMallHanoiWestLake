@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        #canvas {
+            position: absolute;
+            /* width: calc(100% - 20px); */
+            width: calc(100% - 100px);
+
+            /* height: calc(100% - 120px); */
+            height: calc(100% - 20px);
+
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+
+            border: 1px solid red;
+            box-sizing: content-box;
+        }
+
+        #output {
+            position: absolute;
+            /* top: calc(100vh - 50px); */
+            left: 10px;
+            bottom: 10px;
+        }
+
+        #source{
+            display: none;
+        }
+
+        #floorControls{
+            position:absolute;
+            right: 10px;
+            top:10px;
+            bottom:10px;
+        }
+
+        #floorControls>button {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <svg id="canvas">
+            <!-- <text x="5" y="5" fill="red">Hello World</text>
+            <text id="tBlue" x="15" y="15" fill="blue" dominant-baseline="middle" text-anchor="middle">Hello
+                World</text> -->
+            <defs>
+                
+                <filter id="B1">
+                    <feImage  href="images/B1.jpg" />
+                </filter>
+                <filter id="F1">
+                    <feImage  href="images/F1.jpg" />
+                </filter>
+                <filter id="F2">
+                    <feImage  href="images/F2.jpg" />
+                </filter>
+                <filter id="F3">
+                    <feImage  href="images/F3.jpg" />
+                </filter>
+                <filter id="F4">
+                    <feImage  href="images/F4.jpg" />
+                </filter>
+                <filter id="F5">
+                    <feImage  href="images/F5.jpg" />
+                </filter>
+            </defs>
+
+            <rect id="map" x="0" y="0" width="100%" height="100%" style="filter:url(#F3);" />
+        </svg>
+        <div id="output"></div>
+        <div id="floorControls">
+            <button onclick="setSrc('B1',90)">B1</button>
+            <button onclick="setSrc('F1', 180)">F1</button>
+            <button onclick="setSrc('F2', 180)">F2</button>
+            <button onclick="setSrc('F3', 180)">F3</button>
+            <button onclick="setSrc('F4', 180)">F4</button>
+            <button onclick="setSrc('F5', 180)">F5</button>
+
+        </div>
+    </div>
+
+    <div id="source">
+        <img id="B1" src="images/B1.jpg" />
+        <img id="F1" src="images/F1.jpg" />
+        <img id="F2" src="images/F2.jpg" />
+        <img id="F3" src="images/F3.jpg" />
+        <img id="F4" src="images/F4.jpg" />
+        <img id="F5" src="images/F5.jpg" />
+    </div>
+    <script>
+            let svg = document.querySelectorAll("#canvas")[0]
+
+        function setSrc(id, angle){
+            let map = document.getElementById("map");
+            map.setAttribute("style", `filter:url(#${id})`);
+            let coords = getSVG_CentralCoords(svg)
+            map.setAttribute("transform", `rotate(${angle}, ${coords.x}, ${coords.y})`)
+        }
+
+        setSrc('F3', 180);
+
+        function getSVG_CanvasDimensions(htmlSVG) {
+                return {
+                    height: htmlSVG.clientHeight,
+                    width: htmlSVG.clientWidth
+                }
+            }
+
+            function getSVG_CentralCoords(htmlSVG) {
+                let dims = getSVG_CanvasDimensions(htmlSVG);
+                return {
+                    ...dims,
+                    x: dims.width / 2,
+                    y: dims.height / 2
+                }
+            }
+
+
+        (function () {
+            let svg = document.querySelectorAll("#canvas")[0]
+            console.log(svg)
+            let output = document.getElementById("output")
+
+            function setSVG_DataSource(source) {
+
+            }
+
+            function getSVG_CanvasDimensions(htmlSVG) {
+                return {
+                    height: htmlSVG.clientHeight,
+                    width: htmlSVG.clientWidth
+                }
+            }
+
+            function getSVG_CentralCoords(htmlSVG) {
+                let dims = getSVG_CanvasDimensions(htmlSVG);
+                return {
+                    ...dims,
+                    x: dims.width / 2,
+                    y: dims.height / 2
+                }
+            }
+
+            // output.innerHTML = `width: ${svg.clientWidth}px <br> height: ${svg.clientHeight}px`;
+            let dimensions = getSVG_CentralCoords(svg)
+            let { x: cenX, y: cenY, height, width } = dimensions;
+            output.innerHTML = `center x: ${cenY} </br> y: ${cenX}`
+            // let blueText = document.getElementById("tBlue");
+            // blueText.setAttribute("x", cenX);
+            // blueText.setAttribute("y", cenY);
+
+
+        })()
+
+    </script>
+</body>
+
+</html>
